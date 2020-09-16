@@ -1,40 +1,43 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import { Layout } from "antd";
+import React, { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { Layout } from 'antd';
+import MenuTop from '../components/Admin/MenuTop';
+import AdminSider from '../components/Admin/AdminSider';
 
-import "./LayoutAdmin.scss";
+import './LayoutAdmin.scss';
 
-export default function LayoutAdmin( props ) {  // console.log(props);
-  const { routes } = props; // console.log(routes);
+export default function LayoutAdmin(props) {
+  const { routes } = props;
+  const [ menuCollapsed, setMenuCollapsed ] = useState(false);
   const { Header, Content, Footer } = Layout;
-  
+
   return (
     <Layout>
-      <h2>Menu Sider Admin </h2>
-      <Layout>
-        <Header> ... Header ...</Header>
-        <Content>
-          <LoadRoutesAdmin routes = { routes } />
+      <AdminSider menuCollapsed = { menuCollapsed } />
+      <Layout className='layout-admin'>
+        <Header className='layout-admin__header'>
+          <MenuTop menuCollapsed = { menuCollapsed }  setMenuCollapsed = { setMenuCollapsed }/>
+        </Header>
+        <Content className='layout-admin__content'>
+          <LoadRoutesAdmin routes={routes} />
         </Content>
-        <Footer>Miguel Barrera - 2020</Footer>
+        <Footer className='layout-admin__footer'>Miguel Barrera - 2020</Footer>
       </Layout>
     </Layout>
   );
 }
 
-function LoadRoutesAdmin({ routes }) { 
-    // const { routes } = props
-    //   console.log(props); 
+function LoadRoutesAdmin({ routes }) {
   return (
-  <Switch>
-  { routes.map(( route, index ) => (
-      <Route
-      key = { index }
-      path = { route.path }
-      exact = { route.exact }
-      component = { route.component }
-      />
-  ))}
-  </Switch>
+    <Switch>
+      {routes.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.component}
+        />
+      ))}
+    </Switch>
   );
 }
