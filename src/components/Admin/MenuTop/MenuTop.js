@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "antd";
 import {
   MenuUnfoldOutlined,
@@ -16,15 +17,13 @@ export default function MenuTop(props) {
   return (
     <div className="menu-top">
       <div className="menu-top__left">
-        <img
-          className="menu-top__left-logo"
-          src={PersonalLogo}
-          alt="Miguel Barrera"
-        />
+      <Link to = {'admin/perreoIntenso'}>
+        <img className="menu-top__left-logo" src={ PersonalLogo } alt="Miguel Barrera" />
         <Button type="link" onClick={() => setMenuCollapsed(!menuCollapsed)}>
-          {menuCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          { menuCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined /> }
           {/* <Icon type = {menuCollapsed ? 'menu-unfold': 'menu-fold'} /> */}
         </Button>
+        </Link>
       </div>
       <div className="menu-top__right">
         <Button type="link" onClick={() => console.log("Click-login/logout")}>
