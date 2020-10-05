@@ -12,7 +12,7 @@ import Contact from '../pages/Contact';
 
 // Others
 import Error404 from '../pages/Error404';
-import { Layout } from 'antd';
+// import { Layout } from 'antd';
 
 const routes = [
     {
