@@ -9,11 +9,10 @@ export default function RegisterForm() {
     email: "",
     password: "",
     repeatPassword: "",
-    privacyPolicy: false,
+    privacyPolicy: false
   });
 
   const changeForm = e => {
-      console.log(e.target);
       if (e.target.name === "privacyPolicy") {
       setInput({
         ...input,
@@ -21,14 +20,13 @@ export default function RegisterForm() {
       });
     } else {
       setInput({
-        ...Input,
+        ...input,
         [e.target.name]: e.target.value,
       });
     }
   };
 
   const register = e => {
-    //   e.preventDefault();
       console.log(input);
   };
 
@@ -40,7 +38,7 @@ export default function RegisterForm() {
           type="email"
           name="email"
           placeholder="email"
-          className="register-form__input"
+          className="register-form__inputs"
           value={input.email}
         />
       </Form.Item>
@@ -50,7 +48,7 @@ export default function RegisterForm() {
           type="password"
           name="password"
           placeholder="Password"
-          className="register-form__input"
+          className="register-form__inputs"
           value={input.password}
         />
       </Form.Item>
@@ -60,7 +58,7 @@ export default function RegisterForm() {
           type="password"
           name="repeatPassword"
           placeholder="Repite password"
-          className="register-form__input"
+          className="register-form__inputs"
           value={input.repeatPassword}
         />
       </Form.Item>
