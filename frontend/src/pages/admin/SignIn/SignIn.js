@@ -1,6 +1,7 @@
-import React from "react";
-import { Layout, Tabs } from "antd";
-import { Redirect } from "react-router-dom";
+import React from 'react';
+import { Layout, Tabs } from 'antd';
+import { Redirect } from 'react-router-dom';
+import RegisterForm from '../../../components/Admin/RegisterForm';
 
 import Logo from "../../../assets/img/png/logo-white.png";
 import "./SignIn.scss";
@@ -20,7 +21,7 @@ export default function AdminSignIn() {
               Componente LoginForm
             </TabPane>
             <TabPane tab={<span> Nuevo Usuario </span>} key="2">
-              Componente RegisterForm
+            <RegisterForm />
             </TabPane>
           </Tabs>
         </div>

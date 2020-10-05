@@ -1,10 +1,11 @@
 @import "../../../scss/index.scss";
 
 .sign-in {
-  background-color: #16212b; //   background-image: url("../../../assets/img/png/background-v1.jpg");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  background-color: #16212b; 
+  // background-image: url("../../../assets/img/png/background-v1.jpg");
+  // background-repeat: no-repeat;
+  // background-position: center center;
+  // background-size: cover;
 
   &__content {
     display: flex;
@@ -54,7 +55,7 @@
         }
 
         &:hover {
-          color: $font-grey-dark;
+          color: $font-grey-light;
         }
 
         &:before {
