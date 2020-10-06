@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox /* notification */ } from "antd";
+import { Form, Input, Button, Checkbox, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { emailValidation, minLengthValidation } from '../../../utils/formValidation'
 
@@ -51,7 +51,29 @@ export default function RegisterForm() {
 
     const register = e => {
         // console.log(input);
-        console.log(formValid);
+        const { email, password, repeatPassword, privacyPolicy } = formValid;
+
+        const emailVal = input.email;
+        const passwordVal = input.password;
+        const repeatPasswordVal = input.repeatPassword;
+        const privacyPolicyVal = input.privacyPolicy;
+        
+        if ( !emailVal || !passwordVal || !repeatPasswordVal || !privacyPolicyVal ) {
+            notification ['error']({
+                message: 'Todos los campos son obligatorios.'
+            });
+        } else {
+            if (passwordVal !== repeatPasswordVal) {
+                notification ['error']({
+                    message: 'Las contraseñas tienen que ser iguales.'
+                });
+            } else {
+                // notification ['success']({
+                //     message: 'Cuenta creada con  exito!!!'
+            // });
+                console.log('hola');
+            }
+        }
     };
 
     return (

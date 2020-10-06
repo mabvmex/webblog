@@ -1,14 +1,12 @@
 @import './scss/index.scss';
 
-.app {
-    h1 {
-        color: $primary-color;
-    }
-    h2 {
-        color: palevioletred;
-    }
-    span {
-        font-weight: 900;
-        color: violet;
-    }
+
+.success {
+    border: 1px solid $success !important;
+    background-color: $background-success;
+}
+
+.error {
+    border: 1px solid $error !important;
+    background-color: $background-error;
 }
