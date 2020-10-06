@@ -17,11 +17,11 @@ export default function AdminSignIn() {
         </h1>
         <div className="sign-in__content-tabs">
           <Tabs type="card">
+            <TabPane tab={<span> Nuevo Usuario </span>} key="2" /* Regresar como segunda pestaña ************ */ > 
+            <RegisterForm />
+            </TabPane>
             <TabPane tab={<span> Entrar </span>} key="1">
               Componente LoginForm
-            </TabPane>
-            <TabPane tab={<span> Nuevo Usuario </span>} key="2">
-            <RegisterForm />
             </TabPane>
           </Tabs>
         </div>
