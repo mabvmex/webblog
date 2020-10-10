@@ -54,8 +54,7 @@ export default function RegisterForm() {
     }
   };
 
-  const register = (e) => {
-    // console.log(input);
+  const register = async e => {
     const { email, password, repeatPassword, privacyPolicy } = formValid;
 
     const emailVal = input.email;
@@ -73,7 +72,16 @@ export default function RegisterForm() {
           message: "Las contraseñas tienen que ser iguales.",
         });
       } else {
-        const result = signUpApi(input);
+        const result = await signUpApi(input);
+        if (!result.ok) {
+          notification['error']({
+            message: result.message
+          })
+        } else {
+          notification['success']({
+            message: result.message
+          })
+        }
       }
     }
   };
