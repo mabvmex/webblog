@@ -80,11 +80,32 @@ export default function RegisterForm() {
         } else {
           notification['success']({
             message: result.message
-          })
+          });
+          resetForm();
         }
       }
     }
   };
+
+  const resetForm = () => {
+    const input = document.getElementsByTagName('input');
+    for (let i=0; i< input.length; i++){
+      input[i].classList.remove('success');
+      input[i].classList.remove('error');
+    }
+    setInput({
+    email: "",
+    password: "",
+    repeatPassword: "",
+    privacyPolicy: false,
+    });
+    setFormValid({
+    email: false,
+    password: false,
+    repeatPassword: false,
+    privacyPolicy: false,
+    })
+  }
 
   return (
     <Form className="register-form" onFinish={register} onChange={changeForm}>
