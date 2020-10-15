@@ -17,7 +17,7 @@ exports.createAccessToken = function(user) {
 };
 
 exports.createRefreshToken = function(user) {
-    cosnt payload = {
+    const payload = {
         id: user._id,
         exp: moment().add(30, 'days').unix()
     };
