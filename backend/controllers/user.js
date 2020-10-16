@@ -13,7 +13,9 @@ function signUp(req, res) {
   user.active = false;
 
   if (!password || !repeatPassword) {
-    res.status(404).send({ message: "Las contraseñas son obligatorias" });
+    res.status(404).send({
+      message: "Las contraseñas son obligatorias",
+    });
   } else {
     if (password !== repeatPassword) {
       res.status(404).send({
@@ -56,30 +58,48 @@ function signIn(req, res) {
   const email = params.email.toLowerCase();
   const password = params.password;
 
-  User.findOne({ email }, (err, userStored) => {
-    if (err) {
-      res.status(500).send({ message: "Error del servidor." });
-    } else {
-      if (!userStored) {
-        res.status(400).send({ message: "Usuario no encontrado." });
-      } else {
-        bcrypt.compare(password, userStored.password, (err, check) => {
-          if (err) {
-            res.status(500).send({message: 'Error del servidor.'})
-          } else {
-            if(!userStored.active) {
-              res.status(200).send({code: 200, message: 'El usuario no ha sido activado.'})
-            } else {
-              res.status(200).send({
-                accessToken: jwt.createAccessToken(userStored),
-                refreshToken: jwt.createRefreshToken(userStored)
-              })
-            }
-          }
+  User.findOne(
+    {
+      email,
+    },
+    (err, userStored) => {
+      if (err) {
+        res.status(500).send({
+          message: "Error del servidor.",
         });
+      } else {
+        if (!userStored) {
+          res.status(400).send({
+            message: "Usuario no encontrado.",
+          });
+        } else {
+          bcrypt.compare(password, userStored.password, (err, check) => {
+            if (err) {
+              res.status(500).send({
+                message: "Error del servidor.",
+              });
+            } else if (!check) {
+              res.status(404).send({
+                message: "La contraseña es incorrecta.",
+              });
+            } else {
+              if (!userStored.active) {
+                res.status(200).send({
+                  code: 200,
+                  message: "El usuario no ha sido activado.",
+                });
+              } else {
+                res.status(200).send({
+                  accessToken: jwt.createAccessToken(userStored),
+                  refreshToken: jwt.createRefreshToken(userStored),
+                });
+              }
+            }
+          });
+        }
       }
     }
-  });
+  );
 }
 
 module.exports = {
