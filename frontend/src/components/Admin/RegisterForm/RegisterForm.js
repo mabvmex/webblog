@@ -114,8 +114,8 @@ export default function RegisterForm() {
           prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
           type="email"
           name="email"
-          placeholder="email"
-          className="register-form__inputs"
+          placeholder="Email"
+          className="register-form__input"
           onChange={inputValidation}
           value={input.email}
         />
@@ -126,7 +126,7 @@ export default function RegisterForm() {
           type="password"
           name="password"
           placeholder="Password"
-          className="register-form__inputs"
+          className="register-form__input"
           onChange={inputValidation}
           value={input.password}
         />
@@ -137,7 +137,7 @@ export default function RegisterForm() {
           type="password"
           name="repeatPassword"
           placeholder="Repite password"
-          className="register-form__inputs"
+          className="register-form__input"
           onChange={inputValidation}
           value={input.repeatPassword}
         />

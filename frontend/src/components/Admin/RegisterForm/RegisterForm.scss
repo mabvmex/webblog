@@ -2,29 +2,33 @@
 
 .register-form {
     text-align: left;
+
     .ant-form-item {
+
         &:nth-child(3),
         &:last-of-type {
             margin: 0;
         }
     }
-    
+
     &__input {
-        span.ant-input-prefix  {
-            span {
-                font-size: 0em + 20px / $defaultFontSize;
+        .ant-input-prefix {
+          span {
+            font-size: 0em + 20px / $defaultFontSize;
+          }
+        }
+    
+        Input {
+            font-size: 0em + 20px / $defaultFontSize;
+            padding: 20px 20px 20px 40px;
+      
+            &:focus {
+              border-color: $primary-color;
+              box-shadow: none;
             }
-        }
-        
-    Input {
-        font-size: 0em + 20px / $defaultFontSize;
-        padding: 20px 20px 20px 40px;
-        &:focus {
-            border-color: $primary-color;
-            box-shadow: none;
-        }
-    }
-}
+          }
+      }
+    
 
     &__button {
         width: 100%;
@@ -32,12 +36,12 @@
         background-color: $primary-color;
         color: $font-light;
         height: 42px;
-    
+
         &:hover {
             background-color: $primary-color-hover;
             color: $font-light;
         }
-        
+
         &:focus,
         &:active {
             background-color: $primary-color;

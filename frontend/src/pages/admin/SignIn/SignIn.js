@@ -1,8 +1,8 @@
-import React from 'react';
-import { Layout, Tabs } from 'antd';
+import React from "react";
+import { Layout, Tabs } from "antd";
 // import { Redirect } from 'react-router-dom';
-import RegisterForm from '../../../components/Admin/RegisterForm';
-
+import RegisterForm from "../../../components/Admin/RegisterForm";
+import LoginForm from "../../../components/Admin/loginForm/loginForm";
 import Logo from "../../../assets/img/png/logo-white.png";
 import "./SignIn.scss";
 
@@ -17,11 +17,11 @@ export default function AdminSignIn() {
         </h1>
         <div className="sign-in__content-tabs">
           <Tabs type="card">
-            <TabPane tab={<span> Nuevo Usuario </span>} key="2" /* Regresar como segunda pestaña ************ */ > 
-            <RegisterForm />
-            </TabPane>
             <TabPane tab={<span> Entrar </span>} key="1">
-              Componente LoginForm
+              <LoginForm />
+            </TabPane>
+            <TabPane tab={<span> Nuevo Usuario </span>} key="2">
+              <RegisterForm />
             </TabPane>
           </Tabs>
         </div>
