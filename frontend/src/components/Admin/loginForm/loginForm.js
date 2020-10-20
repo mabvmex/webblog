@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { signInApi } from '../../../api/users';
 import './loginForm.scss';
  
 export default function LoginForm() {
@@ -14,7 +15,7 @@ export default function LoginForm() {
     };
 
     const login = e => {
-        console.log(input, 'console del login en loginForm');
+        signInApi(input)
     };
 
     return (
