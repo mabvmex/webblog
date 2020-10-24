@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import MenuTop from '../components/Admin/MenuTop';
 import AdminSider from '../components/Admin/AdminSider';
 import AdminSignIn from '../pages/admin/SignIn';
-import { getAccessToken } from '../api/auth';
+
 
 import './LayoutAdmin.scss';
 
@@ -14,9 +14,6 @@ export default function LayoutAdmin(props) {
   const { Header, Content, Footer } = Layout;
 
   const user = null;
-
-  const token = getAccessToken();
-  console.log(token);
 
   if ( !user ) {
     return (

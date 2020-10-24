@@ -18,16 +18,17 @@ export default function LoginForm() {
     const login = async e => {
         const result = await signInApi(input);
 
-        if(result.messaage) {
-            notification ['Error']({
-                messaage: result.message
+        if(result.message) {
+            notification['error']({
+                message: result.message
             });
+
         } else {
             const {accessToken, refreshToken } = result;
             localStorage.setItem(ACCESS_TOKEN, accessToken);
             localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
-            notification ['success']({
+            notification['success']({
                 message: 'Login correcto.'
             });
             window.location.href = '/admin';
