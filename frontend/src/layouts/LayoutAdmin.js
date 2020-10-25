@@ -5,8 +5,6 @@ import useAuth from '../hooks/useAuth';
 import MenuTop from '../components/Admin/MenuTop';
 import AdminSider from '../components/Admin/AdminSider';
 import AdminSignIn from '../pages/admin/SignIn';
-
-
 import './LayoutAdmin.scss';
 
 export default function LayoutAdmin(props) {
