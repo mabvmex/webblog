@@ -19,48 +19,45 @@ export function getRefreshTokenApi() {
     return null;
   }
 
-  export function refreshAccessToken(refreshToken) {
-    const url = `${basePath}/${apiVersion}/refresh-access-token`
-    const bodyObj = {
-      refreshToken: refreshToken
-    }
-    const params = {
-      method: 'POST',
-      body: JSON.stringify(bodyObj),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
+  return willExpireToken(refreshToken) ? null : refreshToken;
+}
 
-    fetch(url, params)
-    .then(response => {
-      if(response.status !== 200){
+export function refreshAccessTokenApi(refreshToken) {
+  const url = `${basePath}/${apiVersion}/refresh-access-token`;
+  const bodyObj = {
+    refreshToken: refreshToken,
+  };
+  const params = {
+    method: "POST",
+    body: JSON.stringify(bodyObj),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(url, params)
+    .then((response) => {
+      if (response.status !== 200) {
         return null;
       }
 
       return response.json();
     })
-    .then(result => {
-      if(!result) {
+    .then((result) => {
+      if (!result) {
         logout();
       } else {
         const { accessToken, refreshToken } = result;
         localStorage.setItem(ACCESS_TOKEN, accessToken);
         localStorage.setItem(REFRESH_TOKEN, refreshToken);
-
       }
-    })
-  }
-
-  return willExpireToken(refreshToken) ? null : refreshToken;
+    });
 }
-
 
 export function logout() {
   localStorage.removeItem(ACCESS_TOKEN);
   localStorage.removeItem(REFRESH_TOKEN);
 }
-
 
 function willExpireToken(token) {
   const seconds = 60;

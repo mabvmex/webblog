@@ -1,36 +1,35 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import routes from './config/routes';
-import './App.scss';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import routes from "./config/routes";
+import AuthProvider from "./providers/AuthProvider";
+import "./App.scss";
 
 function App() {
-
-return (
-  <Router>
-    <Switch>
-      { routes.map ((route, index) => (
-        <RouteWithSubRoutes key = {index} {...route} />
-      ))}
-    </Switch>
-  </Router>
-);
+  return (
+  <AuthProvider>
+      <Router>
+        <Switch>
+          {routes.map((route, index) => (
+            <RouteWithSubRoutes key={index} {...route} />
+          ))}
+        </Switch>
+      </Router>
+      </AuthProvider>
+  );
 }
 
 function RouteWithSubRoutes(route) {
   // console.log(route);
   return (
     <Route
-      path = {route.path}
-      exact = {route.exact}
-      render = {props => <route.component routes = {route.routes} {...props} />}
+      path={route.path}
+      exact={route.exact}
+      render={(props) => <route.component routes={route.routes} {...props} />}
     />
-  )
+  );
 }
 
 export default App;
-
-
-
 
 /* SISTEMA DE RUTAS
 <Router>
