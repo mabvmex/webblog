@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 import { getAccessTokenApi, getRefreshTokenApi, refreshAccessTokenApi, logout } from '../api/auth';
 
 export const AuthContext = createContext();
+
 export default function AuthProvider(props) {
     const { children } = props;
     const[ user, setUser ] = useState({
@@ -14,18 +15,16 @@ export default function AuthProvider(props) {
         checkUserLogin(setUser);
     },[])
 
-    return <AuthContext.Provider value = { user }>
-        { children }
-    </AuthContext.Provider>
+    return <AuthContext.Provider value = { user }>  { children } </AuthContext.Provider>
 }
 
 function checkUserLogin(setUser) {
     const accessToken = getAccessTokenApi();
 
     if(!accessToken) {
-        const refreshToken = refreshAccessTokenApi();
+        const refreshToken = getRefreshTokenApi();
 
-        if (!refreshAccessTokenApi) {
+        if (!refreshToken) {
             logout();
             setUser({
                 user: null,
