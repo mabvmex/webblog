@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 import useAuth from "../hooks/useAuth";
 import MenuTop from "../components/Admin/MenuTop";
-import AdminSider from "../components/Admin/AdminSider";
+import AdminSider from "../components/Admin/MenuSider";
 import AdminSignIn from "../pages/admin/SignIn";
 import "./LayoutAdmin.scss";
 
