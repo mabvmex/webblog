@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { getAccessTokenApi } from '../../../api/auth';
-import { getUsersApi } from '../../../api/user';
+import { getUsersActiveApi } from '../../../api/user';
 import './Users.scss'
 
 export default function Users() {
-    const [users, setUsers] = useState([]);
+    const [usersActive, setUsersActive] = useState([]);
+    const [usersInactive, setUsersInactive] = useState([]);
     const token = getAccessTokenApi();
 
+    console.log('usersActive: ', usersActive);
+    console.log('usersNOactive: ', usersInactive);
 
-    console.log(users);
     useEffect(() => {
-        getUsersApi(token).then(response => {
-            setUsers(response);
+        getUsersActiveApi(token, true).then(response => {
+            setUsersActive(response);
+        });
+        getUsersActiveApi(token, false).then(response => {
+            setUsersInactive(response);
         });
     }, [token]);
-
+    
     return (
         <>
         <h1> Lista de usuarios</h1>
