@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeFilled, UserOutlined } from '@ant-design/icons';
 
 import './MenuSider.scss';
 
@@ -14,7 +14,7 @@ function MenuSider( props ) {
       <Menu theme = "dark" mode = "inline" defaultSelectedKeys = {[location.pathname]}>
         <Menu.Item key = "/admin">
           <Link to = {'/admin'}>
-          <HomeOutlined/>
+          <HomeFilled/>
             <span className = "nav-text"> home </span>
           </Link>
         </Menu.Item>

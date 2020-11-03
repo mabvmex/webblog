@@ -11,17 +11,17 @@ export default function Users() {
 
     useEffect(() => {
         getUsersActiveApi(token, true).then(response => {
-            setUsersActive(response);
+            setUsersActive(response.users);
         });
         getUsersActiveApi(token, false).then(response => {
-            setUsersInactive(response);
+            setUsersInactive(response.users);
         });
     }, [token]);
     
     return (
         <div className = 'users'>
-        <ListUsers usersActive = { usersActive } usersInactive = { usersInactive }>
-            </ListUsers>
+        <ListUsers usersActive = { usersActive } usersInactive = { usersInactive } />
         </div>
+        
     )
 }
