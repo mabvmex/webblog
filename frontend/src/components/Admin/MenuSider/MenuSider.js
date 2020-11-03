@@ -24,7 +24,7 @@ function MenuSider( props ) {
                 <span className = 'nav-text'> Users </span>
             </Link>
         </Menu.Item>
-      </Menu>
+      </Menu> 
     </Sider>
   );
 }

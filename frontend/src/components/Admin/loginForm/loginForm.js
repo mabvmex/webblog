@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { signInApi } from '../../../api/users';
+import { signInApi } from '../../../api/user';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../../utils/constants'
 import './loginForm.scss';
  

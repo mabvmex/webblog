@@ -5,7 +5,7 @@ import {
   emailValidation,
   minLengthValidation,
 } from "../../../utils/formValidation";
-import { signUpApi } from "../../../api/users";
+import { signUpApi } from "../../../api/user";
 
 import "./RegisterForm.scss";
 
