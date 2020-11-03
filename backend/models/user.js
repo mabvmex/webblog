@@ -9,9 +9,9 @@ const UserSchema = Schema({
         unique: true
     },
     password: String,
-    // repeatPassword: String,
     role: String,
     active: Boolean,
+    avatar: String,
 });
 
 module.exports = mongoose.model('User', UserSchema);
