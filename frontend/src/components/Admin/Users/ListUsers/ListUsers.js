@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { Switch, List, Avatar, Button } from "antd"; 
 import { EditFilled, StopOutlined, DeleteFilled, CheckSquareFilled } from  '@ant-design/icons';
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
-import  Modal from '../../../Modal'
+import Modal from '../../../Modal'
+import EditUserForm from '../EditUSerForm';
 import './ListUsers.scss'
 
 export default function ListUsers(props) {
@@ -49,10 +50,11 @@ export default function ListUsers(props) {
 
 function UsersActive(props) {
     const { usersActive, setIsVisibleModal, setModalTitulo, setModalContent } = props;
+    
     const editUser = user => {
         setIsVisibleModal(true);
         setModalTitulo(`Editar ${user.name ? user.name :  '...'} ${user.lastname ? user.lastname :  '...'}`);
-        setModalContent('Editar usuario');
+        setModalContent(<EditUserForm user = { user } />);
     }
 
     return(
