@@ -4,12 +4,16 @@ import React, { useState } from "react";
 import { Switch, List, Avatar, Button } from "antd"; 
 import { EditFilled, StopOutlined, DeleteFilled, CheckSquareFilled } from  '@ant-design/icons';
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
-
+import  Modal from '../../../Modal'
 import './ListUsers.scss'
 
 export default function ListUsers(props) {
   const { usersActive, usersInactive } = props;
-  const [viewUsersActives, setViewUsersActives] = useState(true);
+  const [ viewUsersActives, setViewUsersActives ] = useState(true);
+  const [ isVisibleModal, setIsVisibleModal ] = useState(false);
+  const [ modalTitulo, setModalTitulo ] = useState('');
+  const [ modalContent, setModalContent ] = useState(null);
+  
 
   return (
     <div className="list-users">
@@ -22,13 +26,34 @@ export default function ListUsers(props) {
             { viewUsersActives ? "Usuarios Activos" : "Usuarios Inactivos"}
         </span>
       </div>
-      {viewUsersActives ? (<UsersActive usersActive = { usersActive } /> ) : ( <UsersInactive usersInactive  = { usersInactive } />)}
+
+
+
+      {viewUsersActives ? (
+      <UsersActive usersActive = { usersActive } 
+      setIsVisibleModal = { setIsVisibleModal } 
+      setModalContent = { setModalContent }
+      setModalTitulo = { setModalTitulo } /> ) : ( <UsersInactive usersInactive  = { usersInactive } />)}
+      
+
+      <Modal
+        title = { modalTitulo }
+        isVisible = { isVisibleModal } 
+        setIsVisible = { setIsVisibleModal }
+        >
+          { modalContent }
+      </Modal>
     </div>
   );
 }
 
 function UsersActive(props) {
-    const { usersActive } = props;
+    const { usersActive, setIsVisibleModal, setModalTitulo, setModalContent } = props;
+    const editUser = user => {
+        setIsVisibleModal(true);
+        setModalTitulo(`Editar ${user.name ? user.name :  '...'} ${user.lastname ? user.lastname :  '...'}`);
+        setModalContent('Editar usuario');
+    }
 
     return(
         <List 
@@ -39,8 +64,10 @@ function UsersActive(props) {
             <List.Item
             actions = {[
                 <Button
+                onChange={Modal}
                 type = "primary"
-                onClick = { () => console.log("Editar usuario")}> <EditFilled/> </Button>,
+                onClick = { () => editUser(user) }> <EditFilled/> </Button>,
+
                 <Button
                 type = "primary"
                 onClick = { () => console.log("Detener usuario")}> <StopOutlined/> </Button>,
