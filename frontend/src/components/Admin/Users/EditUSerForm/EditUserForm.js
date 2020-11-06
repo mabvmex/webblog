@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Avatar, Form, Input, Select, Button, Row, Col } from "antd";
-import { UserOutlined, MailOutlined, LockFilled, UserSwitchOutlined } from "@ant-design/icons";
+import { UserOutlined, MailOutlined, LockFilled } from "@ant-design/icons";
 import { useDropzone } from "react-dropzone";
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
 import "./EditUserForm.scss";
