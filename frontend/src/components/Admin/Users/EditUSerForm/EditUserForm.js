@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Avatar, Form, Input, Select, Button, Row, Col } from "antd";
-import { UserOutlined, MailOutlined, LockFilled } from "@ant-design/icons";
+import { UserOutlined, MailOutlined, LockFilled, UserSwitchOutlined } from "@ant-design/icons";
 import { useDropzone } from "react-dropzone";
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
 import "./EditUserForm.scss";
@@ -116,9 +116,9 @@ function EditForm(props) {
           <Col span={12}>
             <Form.Item>
               <Select
-                placeholder="Selecciona un rol"
-                onChange={(e) => setUserData({ ...userData, role: e })}
-                defaultValue={userData.role}
+                placeholder="Selecciona un ROL"
+                onChange={e => setUserData({ ...userData, role: e })}
+                // defaultValue={userData.role} 
               >
                 <Option value="admin"> Administrador </Option>
                 <Option value="editor"> Editor </Option>
@@ -135,8 +135,7 @@ function EditForm(props) {
                 prefix={<LockFilled />}
                 type="password"
                 placeholder="Contraseña"
-                onChange={(e) =>
-                  setUserData({ ...userData, password: e.target.value })
+                onChange={(e) => setUserData({ ...userData, password: e.target.value })
                 }
               />
             </Form.Item>
