@@ -18,8 +18,8 @@ exports.ensureAuth = (req, res, next) => {
                 message: 'El token  expirado'
             });
         }
-    } catch (exp) {
-        console.log(exp);
+    } catch (exp) {  // Aquí 
+        console.log(exp); // Y aquí estaba (ex)
         return res.status(404).send({
             message: 'Token invalido'
         });

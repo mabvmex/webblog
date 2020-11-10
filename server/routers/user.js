@@ -10,7 +10,8 @@ api.post('/signup', UserController.signUp);
 api.post('/signin', UserController.signIn);
 api.get('/users', [middleware_auth.ensureAuth], UserController.getUsers);
 api.get('/users-active', [middleware_auth.ensureAuth], UserController.getUsersActive);
-api.put('/upload-avatar/:id', [middleware_auth.ensureAuth, middleware_upload_avatar], UserController.uploadAvatar)
-api.get('/get-avatar/:avatarName', UserController.getAvatar)
+api.put('/upload-avatar/:id', [middleware_auth.ensureAuth, middleware_upload_avatar], UserController.uploadAvatar);
+api.get('/get-avatar/:avatarName', UserController.getAvatar);
+api.put('/update-user/:id', [middleware_auth.ensureAuth], UserController.updateUser);
 
 module.exports = api;
