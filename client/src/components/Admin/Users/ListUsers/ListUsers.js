@@ -1,12 +1,14 @@
 // ¿Cuál es la diferencia entre Switch y switch?
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, List, Avatar, Button } from "antd"; 
 import { EditFilled, StopOutlined, DeleteFilled, CheckSquareFilled } from  '@ant-design/icons';
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
 import Modal from '../../../Modal'
 import EditUserForm from '../EditUSerForm';
+import { getAvatarApi } from '../../../../api/user';
 import './ListUsers.scss'
+
 
 export default function ListUsers(props) {
   const { usersActive, usersInactive } = props;
@@ -48,6 +50,7 @@ export default function ListUsers(props) {
   );
 }
 
+
 function UsersActive(props) {
     const { usersActive, setIsVisibleModal, setModalTitulo, setModalContent } = props;
     
@@ -62,35 +65,55 @@ function UsersActive(props) {
         className='users-active'
         itemLayout = 'horizontal'
         dataSource = { usersActive }
-        renderItem = { user => (
-            <List.Item
-            actions = {[
-                <Button
-                onChange={Modal}
-                type = "primary"
-                onClick = { () => editUser(user) }> <EditFilled/> </Button>,
-
-                <Button
-                type = "primary"
-                onClick = { () => console.log("Detener usuario")}> <StopOutlined/> </Button>,
-                <Button
-                type = "danger"
-                onClick = { () => console.log("Eliminar usuario")}> <DeleteFilled/> </Button>,
-            ]}
-            >
-                <List.Item.Meta 
-                avatar = { <Avatar src = {user.avatar ? user.avatar : noUserAvatar} /> }
-                title = {`
-                ${user.name ? user.name : '...'}
-                ${user.lastname ? user.lastname : '...'}
-                `}
-                description = {user.email}
-                />
-            </List.Item>
-        )}
+        renderItem = { user => <IndividualUserActive user={user} editUser={editUser} />}
         />
     )
 }
+
+
+function IndividualUserActive(props) {
+    const { user, editUser } = props;
+    const [ avatar , setAvatar ] = useState(null);
+
+    useEffect(() => {
+        if(user.avatar) {
+            getAvatarApi(user.avatar)
+            .then(response => {
+                setAvatar(response);
+            })
+        } else {
+            setAvatar(null);
+        }
+    }, [user]);
+
+    return (
+        <List.Item
+        actions = {[
+            <Button
+            onChange={Modal}
+            type = "primary"
+            onClick = { () => editUser(user) }> <EditFilled/> </Button>,
+
+            <Button
+            type = "primary"
+            onClick = { () => console.log("Detener usuario")}> <StopOutlined/> </Button>,
+            <Button
+            type = "danger"
+            onClick = { () => console.log("Eliminar usuario")}> <DeleteFilled/> </Button>,
+        ]}
+        >
+            <List.Item.Meta 
+            avatar = { <Avatar src = {avatar ? avatar : noUserAvatar} /> }
+            title = {`
+            ${user.name ? user.name : '...'}
+            ${user.lastname ? user.lastname : '...'}
+            `}
+            description = {user.email}
+            />
+        </List.Item>
+    )
+}
+
 
 function UsersInactive(props) {
     const { usersInactive } = props;
@@ -100,27 +123,46 @@ function UsersInactive(props) {
         className = 'users-inactive'
         itemLayout = 'horizontal'
         dataSource = { usersInactive }
-        renderItem = { user => (
-            <List.Item
-            actions = {[
-                <Button
-                type = "primary"
-                onClick = { () => console.log("Activar usuario")}> <CheckSquareFilled/> </Button>,
-                <Button
-                type = "danger"
-                onClick = { () => console.log("Eliminar usuario")}> <DeleteFilled/> </Button>,
-            ]}
-            >
-                <List.Item.Meta 
-                avatar = { <Avatar src = {user.avatar ? user.avatar : noUserAvatar} /> }
-                title = {`
-                ${user.name ? user.name : '...'}
-                ${user.lastname ? user.lastname : '...'}
-                `}
-                description = {user.email}
-                />
-            </List.Item>
-        )}
+        renderItem = { user => <IndividualUserInactive user={user} /> }
         />
+    )
+}
+
+
+function IndividualUserInactive(props) {
+    const { user } = props
+    const [ avatar , setAvatar ] = useState(null);
+
+    useEffect(() => {
+        if(user.avatar) {
+            getAvatarApi(user.avatar)
+            .then(response => {
+                setAvatar(response);
+            })
+        } else {
+            setAvatar(null);
+        }
+    }, [user]);
+
+    return (
+        <List.Item
+        actions = {[
+            <Button
+            type = "primary"
+            onClick = { () => console.log("Activar usuario")}> <CheckSquareFilled/> </Button>,
+            <Button
+            type = "danger"
+            onClick = { () => console.log("Eliminar usuario")}> <DeleteFilled/> </Button>,
+        ]}
+        >
+            <List.Item.Meta 
+            avatar = { <Avatar src = {avatar ? avatar : noUserAvatar} /> }
+            title = {`
+            ${user.name ? user.name : '...'}
+            ${user.lastname ? user.lastname : '...'}
+            `}
+            description = {user.email}
+            />
+        </List.Item>
     )
 }
