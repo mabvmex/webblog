@@ -1,7 +1,6 @@
 const jwt = require('../services/jwt');
 const moment = require('moment');
-const USer = require('../models/user');
-const user = require('../models/user');
+const User = require('../models/user');
 
 
 function WillExpireToken(token){
@@ -25,7 +24,7 @@ function refreshAccessToken(req, res) {
         });
     } else {
         const { id } = jwt.decodedToken(refreshToken);
-        USer.findOne({_id: id}, (err, userStored) => {
+        User.findOne({_id: id}, (err, userStored) => {
             if (err) {
                 res.estatus(500).send({
                     message: 'Error del servidor'

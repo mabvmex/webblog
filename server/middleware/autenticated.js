@@ -19,7 +19,7 @@ exports.ensureAuth = (req, res, next) => {
             });
         }
     } catch (exp) {  // Aquí 
-        console.log(exp); // Y aquí estaba (ex)
+        console.log(exp); // Y aquí estaba ex
         return res.status(404).send({
             message: 'Token invalido'
         });
