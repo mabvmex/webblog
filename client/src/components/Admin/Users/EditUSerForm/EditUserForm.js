@@ -54,9 +54,10 @@ export default function EditUserForm(props) {
           message: "Las contraseñas tiene que ser iguales",
         });
         return;
-      } else {
+      } else {  
+        setUserData({...userData, password:'', repeatPassword:''})
         delete userUpdate.repeatPassword;
-      }
+      } 
     }
 
     if (!userUpdate.name || !userUpdate.lastname || !userUpdate.email) {
@@ -212,6 +213,7 @@ function EditForm(props) {
                 prefix={<LockFilled />}
                 type="password"
                 placeholder="Contraseña"
+                value = {userData.password}
                 onChange={(e) =>
                   setUserData({ ...userData, password: e.target.value, })
                 }
@@ -224,6 +226,7 @@ function EditForm(props) {
                 prefix={<LockFilled />}
                 type="password"
                 placeholder="Repite la contraseña"
+                value = {userData.repeatPassword}
                 onChange={(e) =>
                   setUserData({ ...userData, repeatPassword: e.target.value })
                 }
