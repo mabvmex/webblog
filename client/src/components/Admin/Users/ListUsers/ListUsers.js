@@ -5,7 +5,7 @@ import { Switch, List, Avatar, Button } from "antd";
 import { EditFilled, StopOutlined, DeleteFilled, CheckSquareFilled, } from "@ant-design/icons";
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
 import Modal from "../../../Modal";
-import EditUserForm from "../EditUSerForm";
+import EditUserForm from "../EditUserForm";
 import { getAvatarApi } from "../../../../api/user";
 import "./ListUsers.scss";
 

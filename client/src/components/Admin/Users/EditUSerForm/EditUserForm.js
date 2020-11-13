@@ -53,8 +53,10 @@ export default function EditUserForm(props) {
         notification["error"]({
           message: "Las contraseñas tiene que ser iguales",
         });
+        return;
+      } else {
+        delete userUpdate.repeatPassword;
       }
-      return;
     }
 
     if (!userUpdate.name || !userUpdate.lastname || !userUpdate.email) {
@@ -147,7 +149,7 @@ function EditForm(props) {
 
   return (
     <div>
-      <Form className="form-edit" onFinish={updateUser}>
+      <Form className="form-edit" onFinish={updateUser} >
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item>
@@ -168,7 +170,7 @@ function EditForm(props) {
                 placeholder="Apellidos"
                 value={userData.lastname}
                 onChange={(e) =>
-                  setUserData({ ...userData, lastname: e.target.value })
+                  setUserData({ ...userData, lastname: e.target.value, })
                 }
               />
             </Form.Item>
@@ -211,7 +213,7 @@ function EditForm(props) {
                 type="password"
                 placeholder="Contraseña"
                 onChange={(e) =>
-                  setUserData({ ...userData, password: e.target.value })
+                  setUserData({ ...userData, password: e.target.value, })
                 }
               />
             </Form.Item>
