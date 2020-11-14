@@ -271,7 +271,7 @@ function activateUser(req, res) {
           });
         } else {
           res.status(200).send({
-            message: 'Usuario desacticado correctamente.'
+            message: 'Usuario desactivado correctamente.'
           })
         }
       }
