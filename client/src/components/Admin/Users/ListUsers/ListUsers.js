@@ -1,12 +1,12 @@
 // ¿Cuál es la diferencia entre Switch y switch?
-
 import React, { useState, useEffect } from "react";
-import { Switch, List, Avatar, Button } from "antd";
-import { EditFilled, StopOutlined, DeleteFilled, CheckSquareFilled, } from "@ant-design/icons";
+import { Switch, List, Avatar, Button, notification } from "antd";
+import { EditFilled, StopOutlined, DeleteFilled, CheckSquareFilled } from "@ant-design/icons";
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
 import Modal from "../../../Modal";
 import EditUserForm from "../EditUserForm";
-import { getAvatarApi } from "../../../../api/user";
+import { getAvatarApi, activateUserApi } from "../../../../api/user";
+import { getAccessTokenApi } from '../../../../api/auth'
 import "./ListUsers.scss";
 
 export default function ListUsers(props) {
@@ -37,7 +37,7 @@ export default function ListUsers(props) {
           setReloadUsers={setReloadUsers}
         />
       ) : (
-        <UsersInactive usersInactive={usersInactive} />
+        <UsersInactive usersInactive={usersInactive} setReloadUsers={setReloadUsers} />
       )}
 
       <Modal
@@ -72,14 +72,14 @@ function UsersActive(props) {
       itemLayout="horizontal"
       dataSource={usersActive}
       renderItem={(user) => (
-        <IndividualUserActive user={user} editUser={editUser} />
+        <IndividualUserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers }/>
       )}
     />
   );
 }
 
 function IndividualUserActive(props) {
-  const { user, editUser } = props;
+  const { user, editUser, setReloadUsers } = props;
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
@@ -92,21 +92,36 @@ function IndividualUserActive(props) {
     }
   }, [user]);
 
+  const desactivateUser = () => {
+    const accessToken = getAccessTokenApi();
+
+    activateUserApi(accessToken, user._id, false )
+    .then(response => {
+      notification['success']({
+        message: response
+      });
+      setReloadUsers(true);
+    })
+    .catch(err => {
+      notification['error']({
+        message: err
+      });
+    });
+  }
+
   return (
     <List.Item
       actions={[
-        <Button onChange={Modal} type="primary" onClick={() => editUser(user)}>
-          {" "}
-          <EditFilled />{" "}
+        <Button onChange={Modal} type="primary" size='large' shape='circle'  onClick={() => editUser(user)}>
+          <EditFilled />
         </Button>,
-
-        <Button type="primary" onClick={() => console.log("Detener usuario")}>
-          {" "}
-          <StopOutlined />{" "}
+        
+        <Button type='default' size='large' shape='circle' danger  onClick={desactivateUser} >
+          <StopOutlined />
         </Button>,
-        <Button type="danger" onClick={() => console.log("Eliminar usuario")}>
-          {" "}
-          <DeleteFilled />{" "}
+        
+        <Button type="danger" size='large' shape='circle'>
+          <DeleteFilled />
         </Button>,
       ]}
     >
@@ -123,20 +138,20 @@ function IndividualUserActive(props) {
 }
 
 function UsersInactive(props) {
-  const { usersInactive } = props;
+  const { usersInactive, setReloadUsers } = props;
 
   return (
     <List
       className="users-inactive"
       itemLayout="horizontal"
       dataSource={usersInactive}
-      renderItem={(user) => <IndividualUserInactive user={user} />}
+      renderItem={(user) => <IndividualUserInactive user={user} setReloadUsers={setReloadUsers} />}
     />
   );
 }
 
 function IndividualUserInactive(props) {
-  const { user } = props;
+  const { user, setReloadUsers } = props;
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
@@ -149,16 +164,33 @@ function IndividualUserInactive(props) {
     }
   }, [user]);
 
+  
+  const activateUser = () => {
+    const accessToken = getAccessTokenApi();
+
+    activateUserApi(accessToken, user._id, true )
+    .then(response => {
+      notification['success']({
+        message: response
+      });
+      setReloadUsers(true);
+    })
+    .catch(err => {
+      notification['error']({
+        message: err
+      });
+    });
+  }
+
   return (
     <List.Item
       actions={[
-        <Button type="primary" onClick={() => console.log("Activar usuario")}>
-          {" "}
-          <CheckSquareFilled />{" "}
+        <Button type="primary" onClick={activateUser}>
+          <CheckSquareFilled />
         </Button>,
         <Button type="danger" onClick={() => console.log("Eliminar usuario")}>
-          {" "}
-          <DeleteFilled />{" "}
+          
+          <DeleteFilled />
         </Button>,
       ]}
     >
