@@ -5,4 +5,4 @@ const api = express.Router();
 api.post('/refresh-access-token', AuthController.refreshAccessToken);
 
 
-module.exports = api
+module.exports = api;
