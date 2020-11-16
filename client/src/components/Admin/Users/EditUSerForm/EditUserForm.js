@@ -55,7 +55,7 @@ export default function EditUserForm(props) {
         });
         return;
       } else {  
-        setUserData({...userData, password:'', repeatPassword:''})
+        setUserData({...userData, password:'', repeatPassword:''});
         delete userUpdate.repeatPassword;
       } 
     }

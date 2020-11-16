@@ -1,13 +1,15 @@
 // ¿Cuál es la diferencia entre Switch y switch?
 import React, { useState, useEffect } from "react";
-import { Switch, List, Avatar, Button, notification } from "antd";
-import { EditFilled, StopOutlined, DeleteFilled, CheckSquareFilled } from "@ant-design/icons";
+import { Switch, List, Avatar, Button, notification, Modal as ModalAntD } from "antd";
+import { EditFilled, StopOutlined, DeleteFilled, CheckCircleFilled, QuestionCircleFilled } from "@ant-design/icons";
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
 import Modal from "../../../Modal";
 import EditUserForm from "../EditUserForm";
-import { getAvatarApi, activateUserApi } from "../../../../api/user";
-import { getAccessTokenApi } from '../../../../api/auth'
+import {  getAvatarApi,  activateUserApi,  deleteUserApi, } from "../../../../api/user";
+import { getAccessTokenApi } from "../../../../api/auth";
 import "./ListUsers.scss";
+
+const { confirm } = ModalAntD;
 
 export default function ListUsers(props) {
   const { usersActive, usersInactive, setReloadUsers } = props;
@@ -15,6 +17,33 @@ export default function ListUsers(props) {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalTitulo, setModalTitulo] = useState("");
   const [modalContent, setModalContent] = useState(null);
+
+  const showDeleteConfirm = (user) => {
+    const accessToken = getAccessTokenApi();
+
+    confirm({
+      title: "Eliminado usuario",
+      icon: <QuestionCircleFilled> </QuestionCircleFilled>,
+      content: `¿Estás seguro que quieres eliminar a ${user.email}?`,
+      okText: "Eliminar",
+      okType: "danger primary",
+      cancelText: "Cancelar",
+      onOk() {
+        deleteUserApi(accessToken, user._id)
+          .then((response) => {
+            notification["success"]({
+              message: response,
+            });
+            setReloadUsers(true);
+          })
+          .catch((err) => {
+            notification["error"]({
+              message: err,
+            });
+          });
+      },
+    });
+  };
 
   return (
     <div className="list-users">
@@ -35,9 +64,13 @@ export default function ListUsers(props) {
           setModalContent={setModalContent}
           setModalTitulo={setModalTitulo}
           setReloadUsers={setReloadUsers}
+          showDeleteConfirm={showDeleteConfirm}
         />
       ) : (
-        <UsersInactive usersInactive={usersInactive} setReloadUsers={setReloadUsers} />
+        <UsersInactive
+          usersInactive={usersInactive}
+          setReloadUsers={setReloadUsers}
+        />
       )}
 
       <Modal
@@ -52,7 +85,14 @@ export default function ListUsers(props) {
 }
 
 function UsersActive(props) {
-  const { usersActive, setIsVisibleModal, setModalTitulo, setModalContent, setReloadUsers } = props;
+  const {
+    usersActive,
+    setIsVisibleModal,
+    setModalTitulo,
+    setModalContent,
+    setReloadUsers,
+    showDeleteConfirm,
+  } = props;
 
   const editUser = (user) => {
     setIsVisibleModal(true);
@@ -62,7 +102,11 @@ function UsersActive(props) {
       }`
     );
     setModalContent(
-      <EditUserForm user={user} setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers } />
+      <EditUserForm
+        user={user}
+        setIsVisibleModal={setIsVisibleModal}
+        setReloadUsers={setReloadUsers}
+      />
     );
   };
 
@@ -72,14 +116,19 @@ function UsersActive(props) {
       itemLayout="horizontal"
       dataSource={usersActive}
       renderItem={(user) => (
-        <IndividualUserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers }/>
+        <IndividualUserActive
+          user={user}
+          editUser={editUser}
+          setReloadUsers={setReloadUsers}
+          showDeleteConfirm={showDeleteConfirm}
+        />
       )}
     />
   );
 }
 
 function IndividualUserActive(props) {
-  const { user, editUser, setReloadUsers } = props;
+  const { user, editUser, setReloadUsers, showDeleteConfirm } = props;
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
@@ -95,32 +144,52 @@ function IndividualUserActive(props) {
   const desactivateUser = () => {
     const accessToken = getAccessTokenApi();
 
-    activateUserApi(accessToken, user._id, false )
-    .then(response => {
-      notification['success']({
-        message: response
+    activateUserApi(accessToken, user._id, false)
+      .then((response) => {
+        notification["success"]({
+          message: response,
+        });
+        setReloadUsers(true);
+      })
+      .catch((err) => {
+        notification["error"]({
+          message: err,
+        });
       });
-      setReloadUsers(true);
-    })
-    .catch(err => {
-      notification['error']({
-        message: err
-      });
-    });
-  }
+  };
+
+  // showDeleteConfirm
 
   return (
     <List.Item
       actions={[
-        <Button onChange={Modal} type="primary" size='large' shape='circle'  onClick={() => editUser(user)}>
+        <Button
+          onChange={Modal}
+          type="primary"
+          size="large"
+          shape="circle"
+          onClick={() => editUser(user)}
+        >
           <EditFilled />
         </Button>,
-        
-        <Button type='default' size='large' shape='circle' danger  onClick={desactivateUser} >
+
+        <Button
+          type="default"
+          danger
+          size="large"
+          shape="circle"
+          onClick={desactivateUser}
+        >
           <StopOutlined />
         </Button>,
-        
-        <Button type="danger" size='large' shape='circle'>
+
+        <Button
+          type="primary"
+          danger
+          size="large"
+          shape="circle"
+          onClick={e => showDeleteConfirm(user)}
+        >
           <DeleteFilled />
         </Button>,
       ]}
@@ -138,20 +207,22 @@ function IndividualUserActive(props) {
 }
 
 function UsersInactive(props) {
-  const { usersInactive, setReloadUsers } = props;
+  const { usersInactive, setReloadUsers, showDeleteConfirm } = props;
 
   return (
     <List
       className="users-inactive"
       itemLayout="horizontal"
       dataSource={usersInactive}
-      renderItem={(user) => <IndividualUserInactive user={user} setReloadUsers={setReloadUsers} />}
+      renderItem={(user) => (
+        <IndividualUserInactive user={user} setReloadUsers={setReloadUsers} showDeleteConfirm={showDeleteConfirm}/>
+      )}
     />
   );
 }
 
 function IndividualUserInactive(props) {
-  const { user, setReloadUsers } = props;
+  const { user, setReloadUsers, showDeleteConfirm } = props;
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
@@ -164,32 +235,42 @@ function IndividualUserInactive(props) {
     }
   }, [user]);
 
-  
+  // showDeleteConfirm
+
   const activateUser = () => {
     const accessToken = getAccessTokenApi();
 
-    activateUserApi(accessToken, user._id, true )
-    .then(response => {
-      notification['success']({
-        message: response
+    activateUserApi(accessToken, user._id, true)
+      .then((response) => {
+        notification["success"]({
+          message: response,
+        });
+        setReloadUsers(true);
+      })
+      .catch((err) => {
+        notification["error"]({
+          message: err,
+        });
       });
-      setReloadUsers(true);
-    })
-    .catch(err => {
-      notification['error']({
-        message: err
-      });
-    });
-  }
+  };
 
   return (
     <List.Item
       actions={[
-        <Button type="primary" onClick={activateUser}>
-          <CheckSquareFilled />
+        <Button
+          type="primary"
+          size="large"
+          shape="circle"
+          onClick={activateUser}
+        >
+          <CheckCircleFilled />
         </Button>,
-        <Button type="danger" onClick={() => console.log("Eliminar usuario")}>
-          
+        <Button
+          type="danger"
+          size="large"
+          shape="circle"
+          onClick={ showDeleteConfirm }
+        >
           <DeleteFilled />
         </Button>,
       ]}
