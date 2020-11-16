@@ -226,7 +226,7 @@ async function updateUser(req, res) {
           message: 'Error al encriptar la contraseña'
         });
       } else {
-        userData.password = hash
+        userData.password = hash;
       }
     });
   }
@@ -272,14 +272,14 @@ function activateUser(req, res) {
         } else {
           res.status(200).send({
             message: 'Usuario desactivado correctamente.'
-          })
+          });
         }
       }
     }
   });
 }
 
-function delteUsers(req, res) {
+function deleteUsers(req, res) {
   const { id } = req.params;
 
   User.findByIdAndRemove(id, (err, userDeleted) => {
@@ -310,5 +310,5 @@ module.exports = {
   getAvatar,
   updateUser,
   activateUser,
-  delteUsers,
+  deleteUsers,
 };
