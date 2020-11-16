@@ -70,6 +70,7 @@ export default function ListUsers(props) {
         <UsersInactive
           usersInactive={usersInactive}
           setReloadUsers={setReloadUsers}
+          showDeleteConfirm={showDeleteConfirm}
         />
       )}
 
@@ -269,7 +270,7 @@ function IndividualUserInactive(props) {
           type="danger"
           size="large"
           shape="circle"
-          onClick={ showDeleteConfirm }
+          onClick={e => showDeleteConfirm(user) }
         >
           <DeleteFilled />
         </Button>,
