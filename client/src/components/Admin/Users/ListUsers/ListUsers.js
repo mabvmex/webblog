@@ -1,11 +1,28 @@
 // ¿Cuál es la diferencia entre Switch y switch?
 import React, { useState, useEffect } from "react";
-import { Switch, List, Avatar, Button, notification, Modal as ModalAntD } from "antd";
-import { EditFilled, StopOutlined, DeleteFilled, CheckCircleFilled, QuestionCircleFilled } from "@ant-design/icons";
+import {
+  Switch,
+  List,
+  Avatar,
+  Button,
+  notification,
+  Modal as ModalAntD,
+} from "antd";
+import {
+  EditFilled,
+  StopOutlined,
+  DeleteFilled,
+  CheckCircleFilled,
+  QuestionCircleFilled,
+} from "@ant-design/icons";
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
 import Modal from "../../../Modal";
 import EditUserForm from "../EditUserForm";
-import {  getAvatarApi,  activateUserApi,  deleteUserApi, } from "../../../../api/user";
+import {
+  getAvatarApi,
+  activateUserApi,
+  deleteUserApi,
+} from "../../../../api/user";
 import { getAccessTokenApi } from "../../../../api/auth";
 import "./ListUsers.scss";
 
@@ -17,6 +34,21 @@ export default function ListUsers(props) {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalTitulo, setModalTitulo] = useState("");
   const [modalContent, setModalContent] = useState(null);
+
+
+
+  const addUserModal = () => {
+    setIsVisibleModal(true);
+    setModalTitulo('Nuevo usuario');
+    setModalContent(
+      <div>
+        <h1> Formulario de nuevo usuario </h1>
+        <h2> Admin </h2>
+      </div>
+    );
+  }
+
+
 
   const showDeleteConfirm = (user) => {
     const accessToken = getAccessTokenApi();
@@ -47,14 +79,22 @@ export default function ListUsers(props) {
 
   return (
     <div className="list-users">
-      <div className="list-users__switch">
-        <Switch
-          defaultChecked
-          onChange={() => setViewUsersActives(!viewUsersActives)}
-        />
-        <span>
-          {viewUsersActives ? "Usuarios Activos" : "Usuarios Inactivos"}
-        </span>
+      <div className="list-users__header">
+        <div className="list-users__header-switch">
+          <Switch
+            defaultChecked
+            onChange={() => setViewUsersActives(!viewUsersActives)}
+          />
+          <span>
+            {viewUsersActives ? "Usuarios Activos" : "Usuarios Inactivos"}
+          </span>
+        </div>
+        <Button
+          type="primary" shape='round'
+          onClick={ addUserModal }
+        >
+          Nuevo usuario
+        </Button>
       </div>
 
       {viewUsersActives ? (
@@ -189,7 +229,7 @@ function IndividualUserActive(props) {
           danger
           size="large"
           shape="circle"
-          onClick={e => showDeleteConfirm(user)}
+          onClick={(e) => showDeleteConfirm(user)}
         >
           <DeleteFilled />
         </Button>,
@@ -216,7 +256,11 @@ function UsersInactive(props) {
       itemLayout="horizontal"
       dataSource={usersInactive}
       renderItem={(user) => (
-        <IndividualUserInactive user={user} setReloadUsers={setReloadUsers} showDeleteConfirm={showDeleteConfirm}/>
+        <IndividualUserInactive
+          user={user}
+          setReloadUsers={setReloadUsers}
+          showDeleteConfirm={showDeleteConfirm}
+        />
       )}
     />
   );
@@ -270,7 +314,7 @@ function IndividualUserInactive(props) {
           type="danger"
           size="large"
           shape="circle"
-          onClick={e => showDeleteConfirm(user) }
+          onClick={(e) => showDeleteConfirm(user)}
         >
           <DeleteFilled />
         </Button>,
