@@ -1,28 +1,13 @@
 // ¿Cuál es la diferencia entre Switch y switch?
+
 import React, { useState, useEffect } from "react";
-import {
-  Switch,
-  List,
-  Avatar,
-  Button,
-  notification,
-  Modal as ModalAntD,
-} from "antd";
-import {
-  EditFilled,
-  StopOutlined,
-  DeleteFilled,
-  CheckCircleFilled,
-  QuestionCircleFilled,
-} from "@ant-design/icons";
+import { Switch, List, Avatar, Button, notification, Modal as ModalAntD } from "antd";
+import { EditFilled, StopOutlined, DeleteFilled, CheckCircleFilled, QuestionCircleFilled } from "@ant-design/icons";
 import noUserAvatar from "../../../../assets/img/png/no-avatar.png";
 import Modal from "../../../Modal";
 import EditUserForm from "../EditUserForm";
-import {
-  getAvatarApi,
-  activateUserApi,
-  deleteUserApi,
-} from "../../../../api/user";
+import AddUserForm from '../AddUserForm';
+import { getAvatarApi, activateUserApi, deleteUserApi } from "../../../../api/user";
 import { getAccessTokenApi } from "../../../../api/auth";
 import "./ListUsers.scss";
 
@@ -41,12 +26,8 @@ export default function ListUsers(props) {
     setIsVisibleModal(true);
     setModalTitulo('Nuevo usuario');
     setModalContent(
-      <div>
-        <h1> Formulario de nuevo usuario </h1>
-        <h2> Admin </h2>
-      </div>
-    );
-  }
+      <AddUserForm setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers} /> );
+  };
 
 
 

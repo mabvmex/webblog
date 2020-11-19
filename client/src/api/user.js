@@ -213,3 +213,27 @@ export function deleteUserApi(token, userId) {
   });
 
 }
+
+export function signUpAdminApi(token, data) {
+  const url = `${basePath}/${apiVersion}/signup-admin`;
+
+  const params = {
+    method: 'POST',
+    headers: {
+      "Content-Type": 'application/json',
+      Authorization: token
+    },
+    body: JSON.stringify(data)
+  };
+
+  return fetch (url, params)
+  .then(response => {
+    return response.json();
+  })
+  .then(result => {
+    return result.message;
+  })
+  .catch(err => {
+    return err.message;
+  });
+}
