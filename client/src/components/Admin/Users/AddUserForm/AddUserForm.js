@@ -11,7 +11,38 @@ export default function EditUserForm(props) {
     const [ userData, setUserData] = useState({});
 
     const addUser = e => {
-        console.log('CREANDO USUARIO');
+        if(
+            !userData.name || 
+            !userData.lastname || 
+            !userData.role || 
+            !userData.email || 
+            !userData.password || 
+            !userData.repeatPassword
+        ) {
+            notification['error']({
+                message: 'Todos los campos son obligatorios.'
+            })
+        } else if(userData.password !== userData.repeatPassword) {
+            notification['error']({
+                message: 'Las contraseñas tiene que ser iguales.'
+            })
+        } else {
+            const accessToken = getAccessTokenApi();
+            signUpAdminApi(accessToken, userData)
+            .then(response => {
+                notification['success']({
+                    message: response
+                });
+                setIsVisibleModal(false);
+                setReloadUsers(true);
+                setUserData({});
+            })
+            .catch(err => {
+                notification['error']({
+                    message: err
+                });
+            });
+        }
     };
 
     return (
@@ -73,7 +104,7 @@ function AddForm(props){
                             value={userData.role}
                             >
                             <Option value='admin'> Administrador </Option>
-                            <Option value='editor'> Edito </Option>
+                            <Option value='editor'> Editor </Option>
                             <Option value='reviewer'> Revisor </Option>
                         </Select>
                     </Form.Item>
@@ -105,7 +136,7 @@ function AddForm(props){
                 </Col>
             </Row>
             <Form.Item>
-                <Button type='primary' shape='round' htmlType='submit' className='btn-submit'> Crear usuario </Button>
+                <Button type='primary' /* shape='round' */ htmlType='submit' className='btn-submit'> Crear usuario </Button>
             </Form.Item>
             
         </Form>
