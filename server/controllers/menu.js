@@ -28,30 +28,29 @@ function addMenu(req, res) {
   });
 }
 
-function getMenus (req, res) {
+function getMenu (req, res) {
     Menu.find()
         .sort({order: 'asc'})
-        .exec((err, menusStored) => {
+        .exec((err, menuStored) => {
             if (err) {
                 res.status(500).send({
                     message: 'Error del servidor'
                 });
             } else {
-              if (!menusStored) {
+              if (!menuStored) {
                 res.status(404).send({
-                  message: "No se ha encontrado ningún elemento en el menú",
+                  message: 'No se ha encontrado ningún elemento en el menú',
                 });
               } else {
                 res.status(200).send({
-                  menu: menusStored,
+                  menu: menuStored
                 });
               }
             }
-        })
-
+        });
 }
 
 module.exports = {
   addMenu,
-  getMenus,
+  getMenu,
 };
