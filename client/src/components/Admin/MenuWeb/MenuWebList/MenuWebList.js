@@ -3,7 +3,7 @@ import { Switch, List, Button, Modal as ModalAntd, notification } from 'antd';
 import { EditFilled, DeleteFilled } from '@ant-design/icons';
 import Modal from '../../../Modal';
 import DragSortableList  from 'react-drag-sortable';
-import { updateMenuApi } from '../../../../api/menu';
+import { updateMenuApi, activateMenuApi } from '../../../../api/menu';
 import { getAccessTokenApi } from '../../../../api/auth'
 import './MenuWebList.scss';
 
@@ -23,13 +23,25 @@ export default function MenuWebList(props) {
         
         menu.forEach(element => {
             listItemsArray.push({
-            content: <MenuItem element={element} />
+            content: <MenuItem element={element} activateMenu = {activateMenu} />
             });
         });
         
         setListItems(listItemsArray);
 
     }, [menu])
+
+
+    const activateMenu = (menu, status) => {
+        const accessToken = getAccessTokenApi()
+
+        activateMenuApi(accessToken, menu._id, status)
+        .then(response => {
+            notification['success']({
+                message: response
+            });
+        })
+    }
 
 
     const onSort = (sortedList, dropEvent) => {
@@ -58,12 +70,12 @@ export default function MenuWebList(props) {
 }
 
 function MenuItem(props) {
-    const {element} = props;
+    const {element, activateMenu } = props;
 
     return (
         <List.Item
             actions={[
-                <Switch defaultChecked = {element.active} />,
+                <Switch defaultChecked = {element.active} onChange={(e) => activateMenu(element, e) } />,
                 <Button type='primary' shape='circle' size='large'> <EditFilled />  </Button>,
                 <Button type='danger' shape='circle' size='large'> <DeleteFilled />  </Button>
             ]}>
