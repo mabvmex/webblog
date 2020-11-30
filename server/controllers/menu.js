@@ -28,7 +28,7 @@ function addMenu(req, res) {
   });
 }
 
-function getMenu (req, res) {
+function getMenu(req, res) {
     Menu.find()
         .sort({order: 'asc'})
         .exec((err, menuStored) => {
@@ -50,7 +50,7 @@ function getMenu (req, res) {
         });
 }
 
-function updateMenu (req, res) {
+function updateMenu(req, res) {
     let menuData = req.body;
     const params = req.params;
 
@@ -73,9 +73,39 @@ function updateMenu (req, res) {
     })
 }
 
+function activateMenu(req, res) {
+    const { id } = req.params;
+    const { active } = req.body;
+
+    Menu.findByIdAndUpdate(id, {active}, (err, menuActivated) =>{
+        if (err){
+            res.status(500).send({
+                message: 'Error del servidor'
+            });
+        } else {
+            if(!menuActivated){
+                res.status(404).send({
+                    message: 'No se ha encontrado el menú'
+                });
+            } else {
+                if(active === true) {
+                    res.status(200).send({
+                        message: 'Menú activado correctamente'
+                    });
+                } else {
+                    res.status(200).send({
+                        message: 'Menú desactivado correctamente'
+                    })
+                }
+            }
+        }
+    })
+}
+
 
 module.exports = {
   addMenu,
   getMenu,
   updateMenu,
+  activateMenu
 };
