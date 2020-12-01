@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { getMenuApi } from '../../../api/menu'
+import { getMenuApi } from '../../../api/menu';
 import MenuWebList from '../../../components/Admin/MenuWeb/MenuWebList';
 
 export default function MenuWeb() {
