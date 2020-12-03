@@ -24,7 +24,7 @@ export function getMenuApi() {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json',
-            'Authorization': token
+            Authorization: token
         },
         body: JSON.stringify(data)
     };
@@ -85,5 +85,28 @@ export function addMenuApi (token, menu) {
     })
     .catch(err => {
         return err.message;
+    });
+}
+
+export function deleteMenuApi(token, menuId) {
+    const url = `${basePath}/${apiVersion}/delete-menu/${menuId}/`;
+
+    const params = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: token
+        },
+    };
+
+    return fetch (url, params)
+    .then(resolve => {
+        return resolve.json();
+    })
+    .then(result => {
+        return result.message;
+    })
+    .catch(err => {
+       console.log(err.message);
     });
 }

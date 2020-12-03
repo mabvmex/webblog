@@ -3,8 +3,9 @@ import { Form, Input, Button, notification, message } from 'antd';
 import { FontSizeOutlined, LinkOutlined } from '@ant-design/icons';
 import { updateMenuApi } from '../../../../api/menu';
 import { getAccessTokenApi } from '../../../../api/auth';
-
 import './EditMenuWebForm.scss';
+
+
 
 export default function EditMenuWebForm(props) {
     const { setIsVisibleModal, setReloadMenuWeb, menu } = props;
@@ -37,9 +38,6 @@ export default function EditMenuWebForm(props) {
         }
     }
 
-
-
-
     return(
         <div className='edit-menu-web-form'>
             <EditForm 
@@ -50,6 +48,8 @@ export default function EditMenuWebForm(props) {
         </div>
     )
 }
+
+
 
 function EditForm(props){
     const { menuWebData, setMenuWebData, editMenu } = props;

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Switch, List, Button, Modal as ModalAntd, notification } from 'antd';
-import { EditFilled, DeleteFilled } from '@ant-design/icons';
+import { EditFilled, DeleteFilled, QuestionCircleFilled } from '@ant-design/icons';
 import Modal from '../../../Modal';
 import DragSortableList  from 'react-drag-sortable';
-import { updateMenuApi, activateMenuApi } from '../../../../api/menu';
+import { updateMenuApi, activateMenuApi, deleteMenuApi } from '../../../../api/menu';
 import { getAccessTokenApi } from '../../../../api/auth';
 import AddMenuWebForm from '../AddMenuWebForm';
 import EditMenuWebForm from '../EditMenuWebForm';
@@ -26,7 +26,12 @@ export default function MenuWebList(props) {
         
         menu.forEach(element => {
             listItemsArray.push({
-            content: <MenuItem element={element} activateMenu = {activateMenu} EditMenuWebModal={EditMenuWebModal} />
+            content: <MenuItem 
+                element={element} 
+                activateMenu = {activateMenu} 
+                EditMenuWebModal={EditMenuWebModal}
+                deleteMenu = {deleteMenu}
+                />
             });
         });
         
@@ -69,6 +74,33 @@ export default function MenuWebList(props) {
         );
     }
 
+    const deleteMenu = menu => {
+        const accessToken = getAccessTokenApi();
+
+        confirm ({
+            title: 'Eliminar menú!',
+            icon: <QuestionCircleFilled> </QuestionCircleFilled>,
+            content: `¿Deseas eliminar el menú ${menu.title}?`,
+            okText: 'Eliminar',
+            okType: 'danger primary',
+            cancelText: 'Cancelar',
+            onOk(){
+                deleteMenuApi(accessToken, menu._id)
+                .then(response => {
+                    notification['success']({
+                        message: response
+                    });
+                    setReloadMenuWeb(true);
+                })
+                .catch(() => {
+                    notification['error']({
+                        message: 'Error del servidor, intentelo más tarde'
+                    })
+                })
+            }
+        })
+    }
+
     const EditMenuWebModal = menu => {
         setIsVisibleModal(true);
         setModalTitle(`Editar menú: ${menu.title}`);
@@ -80,6 +112,7 @@ export default function MenuWebList(props) {
             />
         )
     }
+
     return (
         <div className='menu-web-list'>
             <div className='menu-web-list__header'>
@@ -102,14 +135,14 @@ export default function MenuWebList(props) {
 }
 
 function MenuItem(props) {
-    const {element, activateMenu, EditMenuWebModal } = props;
+    const {element, activateMenu, EditMenuWebModal, deleteMenu } = props;
 
     return (
         <List.Item
             actions={[
                 <Switch defaultChecked = {element.active} onChange={(e) => activateMenu(element, e) } />,
                 <Button type='primary' shape='circle' size='large' onClick={() => EditMenuWebModal(element)}> <EditFilled />  </Button>,
-                <Button type='danger' shape='circle' size='large'> <DeleteFilled />  </Button>
+                <Button type='danger' shape='circle' size='large'onClick={()=> deleteMenu(element)}> <DeleteFilled />  </Button>
             ]}>
             <List.Item.Meta title={element.title} description={element.url} />
         </List.Item>
