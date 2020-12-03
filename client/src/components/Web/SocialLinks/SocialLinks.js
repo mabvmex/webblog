@@ -1,5 +1,9 @@
 import React from 'react';
+<<<<<<< HEAD
 import { YoutubeFilled, TwitterSquareFilled, FacebookFilled, LinkedinFilled, GithubFilled } from '@ant-design/icons';
+=======
+import { YoutubeFilled, TwitterSquareFilled, FacebookFilled, LinkedinFilled } from '@ant-design/icons';
+>>>>>>> d43aa3f2974ed955efdbbfde85f19878b85657a2
 // import { ReactComponent as YT_icon } from '../../../assets/img/svg/youtube.svg'
 // import { ReactComponent as TW_icon } from '../../../assets/img/svg/twitter.svg'
 // import { ReactComponent as FB_icon } from '../../../assets/img/svg/facebook.svg'
@@ -47,6 +51,7 @@ export default function SocialLinks(){
                 <LinkedinFilled />
                 {/* <LI_icon /> */}
             </a>
+<<<<<<< HEAD
             <a 
                 href='https://www.github.com/mabvmex'
                 className='github'
@@ -56,6 +61,8 @@ export default function SocialLinks(){
                 <GithubFilled />
                 {/* <LI_icon /> */}
             </a>
+=======
+>>>>>>> d43aa3f2974ed955efdbbfde85f19878b85657a2
         </div>
     )
 }
