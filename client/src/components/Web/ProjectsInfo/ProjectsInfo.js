@@ -17,6 +17,7 @@ export default function ProjectsInfo() {
 
       <Col lg={4} />
       <Col lg={16}>
+
         <Row className="row-cards">
           <Col md={8}>
             <CardInfo
@@ -25,13 +26,16 @@ export default function ProjectsInfo() {
               description=" Ut anim dolore"
             />
           </Col>
+          
           <Col md={8}>
             <CardInfo
+              icon={<KeyOutlined />}
               avatar={ <KeyOutlined />}
-              title="Acceso 24/4"
+              title="Acceso 24/7"
               description=" Ut anim dolore"
             />
           </Col>
+
           <Col md={8}>
             <CardInfo
               avatar={ <MessageOutlined />}
@@ -46,6 +50,7 @@ export default function ProjectsInfo() {
               description=" Ut anim dolore"
             />
           </Col>
+
           <Col md={8}>
             <CardInfo
               avatar={<DollarCircleFilled />}
@@ -53,6 +58,7 @@ export default function ProjectsInfo() {
               description=" Ut anim dolore"
             />
           </Col>
+
           <Col md={8}>
             <CardInfo
               avatar={<CheckCircleOutlined />}
@@ -74,7 +80,7 @@ function CardInfo(props) {
 
   return (
     <Card className="projects-info__card">
-      <Meta avatar={avatar} title={title} description={description} />
+      <Meta title={title} avatar={avatar} description={description} />
     </Card>
   );
 }
