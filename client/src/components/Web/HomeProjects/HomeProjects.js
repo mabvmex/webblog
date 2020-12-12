@@ -50,11 +50,9 @@ export default function HomeProjects() {
                 link={'https://courses.agustinnavarrogaldon.com/wordpress'}
               />
             </Col>
-            
-            
           </Row>
 
-            <Row className='row-courses'>
+            <Row className='row-projects'>
             <Col md={6}><CardProject 
                 image={prestashop}
                 title={'Prestashop'}
