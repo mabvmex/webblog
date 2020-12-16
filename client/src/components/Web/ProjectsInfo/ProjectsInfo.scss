@@ -41,13 +41,19 @@
       min-height: 215px;
     }
 
+    .ant-card-meta-avatar {
+      width: 100%;
+    }
+
     .anticon {
+      text-align: center;
       font-size: 45px;
       margin-bottom: 20px;
       color: $primary-color-light;
     }
 
     .ant-card-meta-detail {
+      width: 100%;
       .ant-card-meta-title {
         color: $primary-color-light;
         font-size: 25px;

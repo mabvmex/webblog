@@ -7,7 +7,7 @@ export default function Myinfo() {
     return (
         <div className='my-info' >
             <img src={MyLogo} alt='Miguel Barrera' />
-            <h4> Tus proyectos hechos realidad </h4>
+            <h4> También puedes encontrarme en: </h4>
             <SocialLinks />
         </div>
     )
