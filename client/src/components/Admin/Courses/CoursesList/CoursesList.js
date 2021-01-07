@@ -76,10 +76,10 @@ function Course(props) {
   return (
     <List.Item
       actions={[
-        <Button type="primary" onClick={() => console.log("EDITANDO CURSO")}>
+        <Button type="primary" shape='circle' size='large' onClick={() => console.log("EDITANDO CURSO")}>
           <EditFilled />
         </Button>,
-        <Button type="danger" onClick={() => console.log("ELIMINAR CURSO")}>
+        <Button type="danger" shape='circle' size='large' onClick={() => console.log("ELIMINAR CURSO")}>
           <DeleteFilled />
         </Button>,
       ]}
