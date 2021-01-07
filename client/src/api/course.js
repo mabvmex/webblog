@@ -18,7 +18,7 @@ export function getCoursesApi() {
 
 export function getCoursesDataUdemyApi( id ) {
     const baseUrl = `https://www.udemy.com/api-2.0/courses/${id}`
-    const coursesParams = `?fields[course]=title,headline,url,price,image_480x280`
+    const coursesParams = `?fields[course]=title,headline,url,price,image_100x100`
     const url = baseUrl + coursesParams;
 
     return fetch(url)
