@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { getCoursesDataUdemyApi } from "../../../../api/course";
 import { List, Button, Modal as ModalAnt, notification } from "antd";
 import { EditFilled, DeleteFilled } from "@ant-design/icons";
 import DragSortableList from "react-drag-sortable";
 import Modal from "../../../Modal";
+import AddEditCourseForm from '../AddEditCourseForm';
+import { getAccessTokenApi } from "../../../../api/auth";
+import { getCoursesDataUdemyApi, deleteCourseApi } from "../../../../api/course";
 
 import "./CoursesList.scss";
 
-const { config } = ModalAnt;
+const { confirm } = ModalAnt;
 
 export default function CoursesList(props) {
   const { courses, setReloadCourses } = props;
@@ -20,7 +22,7 @@ export default function CoursesList(props) {
     const listCourseArray = [];
     courses.forEach((course) => {
       listCourseArray.push({
-        content: <Course course={course} />,
+        content: <Course course={course} deleteCourse={deleteCourse} />,
       });
     });
     setListCourses(listCourseArray);
@@ -30,13 +32,50 @@ export default function CoursesList(props) {
     console.log(sortedList);
   };
 
+ const addCourseModal = () => {
+   setIsVisibleModal(true);
+   setModalTitle('Creando nuevo curso');
+   setModalContent(
+     <AddEditCourseForm 
+        setIsVisibleModal = {setIsVisibleModal}
+        setReloadCourses  = {setReloadCourses}
+     />
+   )
+ }
+
+  const deleteCourse = (course) => {
+    const accessToken = getAccessTokenApi();
+
+    confirm({
+      title: "Eliminando curso",
+      content: `¿Estás seguro de eliminar el curso ${course.idCourse}?`,
+      okText: "Eliminar",
+      cancelText: "Cancel",
+      onOk() {
+        deleteCourseApi(accessToken, course._id)
+          .then(response => {
+            const typeNotification = response.code === 200 ? "success" : "warning";
+            notification[typeNotification]({
+              message: response.message,
+            });
+            setReloadCourses(true);
+          })
+          .catch(() => {
+            notification["error"]({
+              message: "Error del servidor, intentalo más tarde",
+            });
+          });
+      },
+    });
+  };
+
   return (
     <div className="courses-list">
       <div className="courses-list__header">
         <Button
           type="primary"
           shape="round"
-          onClick={() => console.log("CREANDO CURSO")}
+          onClick={addCourseModal}
         >
           Nuevo curso
         </Button>
@@ -48,14 +87,23 @@ export default function CoursesList(props) {
             No tienes cursos creados
           </h2>
         )}
-        <DragSortableList items={listCourses} onSort={onSort} type="vertical" />
+        <DragSortableList items={listCourses} onSort={onSort} type="vertical"  />
       </div>
+
+          <Modal
+            title={modalTitle}
+            isVisible={isVisibleModal}
+            setIsVisible={setIsVisibleModal}
+          >
+            {modalContent}
+          </Modal>
+
     </div>
   );
 }
 
 function Course(props) {
-  const { course } = props;
+  const { course, deleteCourse } = props;
   const [courseData, setCourseData] = useState(null);
 
   useEffect(() => {
@@ -76,10 +124,20 @@ function Course(props) {
   return (
     <List.Item
       actions={[
-        <Button type="primary" shape='circle' size='large' onClick={() => console.log("EDITANDO CURSO")}>
+        <Button
+          type="primary"
+          shape="circle"
+          size="large"
+          onClick={() => console.log("EDITANDO CURSO")}
+        >
           <EditFilled />
         </Button>,
-        <Button type="danger" shape='circle' size='large' onClick={() => console.log("ELIMINAR CURSO")}>
+        <Button
+          type="danger"
+          shape="circle"
+          size="large"
+          onClick={() => deleteCourse(course)}
+        >
           <DeleteFilled />
         </Button>,
       ]}
@@ -93,7 +151,6 @@ function Course(props) {
         title={`${courseData.title} | ID: ${course.idCourse}`}
         description={courseData.headline}
       />
-
     </List.Item>
   );
 }
