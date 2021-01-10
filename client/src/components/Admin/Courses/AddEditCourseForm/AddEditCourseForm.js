@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, notification } from 'antd';
-import { KeyOutlined, GiftFilled, DollarCircleFilled } from '@ant-design/icons';
+import { KeyOutlined, GiftFilled, DollarCircleFilled, FileTextOutlined } from '@ant-design/icons';
 import { getAccessTokenApi } from '../../../../api/auth';
 
 import './AddEditCourseForm.scss';
@@ -31,6 +31,16 @@ function AddEditForm(props) {
                 <Input
                     prefix={<KeyOutlined/>}
                     placeholder='ID del curso'
+                    // value={}
+                    // onChange={}
+                    disabled = { course ? true : false}
+                />
+            </Form.Item>
+
+            <Form.Item>
+                <Input
+                    prefix={<FileTextOutlined />}
+                    placeholder='URL del curso'
                     // value={}
                     // onChange={}
                     disabled = { course ? true : false}
