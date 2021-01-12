@@ -56,3 +56,26 @@ export function deleteCourseApi(token, id) {
     });
 
 }
+
+export function addCourseApi(token, course) {
+    const url = `${basePath}/${apiVersion}/add-course`;
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: token
+        },
+        body: JSON.stringify(course)
+    };
+
+    return fetch(url, params)
+    .then(respone => {
+        return respone.json()
+    })
+    .then(result => {
+        return result;
+    })
+    .catch(err => {
+        return err;
+    });
+}
