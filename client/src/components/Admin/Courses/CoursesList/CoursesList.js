@@ -22,7 +22,7 @@ export default function CoursesList(props) {
     const listCourseArray = [];
     courses.forEach((course) => {
       listCourseArray.push({
-        content: <Course course={course} deleteCourse={deleteCourse} />,
+        content: <Course course={course} deleteCourse={deleteCourse} editCourseModal={editCourseModal} />,
       });
     });
     setListCourses(listCourseArray);
@@ -40,8 +40,20 @@ export default function CoursesList(props) {
         setIsVisibleModal = {setIsVisibleModal}
         setReloadCourses  = {setReloadCourses}
      />
-   )
- }
+   );
+ };
+
+ const editCourseModal = course => {
+   setIsVisibleModal(true);
+   setModalTitle('Actualizando curso');
+   setModalContent(
+     <AddEditCourseForm 
+        setIsVisibleModal = { setIsVisibleModal }
+        setReloadCourses  = { setReloadCourses }
+        course = { course }
+     />
+   );
+ };
 
   const deleteCourse = (course) => {
     const accessToken = getAccessTokenApi();
@@ -62,7 +74,7 @@ export default function CoursesList(props) {
           })
           .catch(() => {
             notification["error"]({
-              message: "Error del servidor, intentalo más tarde",
+              message: "Error del servidor, inténtalo más tarde",
             });
           });
       },
@@ -103,7 +115,7 @@ export default function CoursesList(props) {
 }
 
 function Course(props) {
-  const { course, deleteCourse } = props;
+  const { course, deleteCourse, editCourseModal } = props;
   const [courseData, setCourseData] = useState(null);
 
   useEffect(() => {
@@ -135,7 +147,7 @@ function Course(props) {
           type="primary"
           shape="circle"
           size="large"
-          onClick={() => console.log("EDITANDO CURSO")}
+          onClick={() => editCourseModal(course) }
         >
           <EditFilled />
         </Button>,

@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { KeyOutlined, GiftFilled, DollarCircleFilled, GlobalOutlined } from '@ant-design/icons';
 import { getAccessTokenApi } from '../../../../api/auth';
-import { addCourseApi } from '../../../../api/course';
+import { addCourseApi, updateCourseApi } from '../../../../api/course';
 
 import './AddEditCourseForm.scss';
 
 export default function AddEditCourseForm(props) {
     const { setIsVisibleModal, setReloadCourses, course } = props;
     const [ courseData, setCourseData ] = useState({});
+    
+    useEffect(() => {
+        course && setCourseData(course);
+    }, [course])
 
     const addCourse = e => {
         if(!courseData.idCourse) {
@@ -30,14 +34,29 @@ export default function AddEditCourseForm(props) {
             })
             .catch(err => {
                 notification['error']({
-                    message: 'Error del servidor, intentalo más tarde'
+                    message: 'Error del servidor, inténtalo más tarde'
                 })
             })
         };
     }
 
     const updateCourse = e => {
-        console.log('=== ACTUALIZANDO CURSO ===');
+        const accessToken = getAccessTokenApi();
+        updateCourseApi(accessToken, course._id, courseData)
+        .then(response => {
+            const typeNotification = response.code === 200 ? 'success' : 'warning';
+            notification[typeNotification]({
+                message: response.message
+            });
+            setIsVisibleModal(false);
+            setReloadCourses(true);
+            setCourseData({});
+        })
+        .catch(() => {
+            notification['error']({
+                message: 'Error del servidor, inténtalo más tarde'
+            })
+        })
     }
 
     return (
@@ -78,7 +97,6 @@ function AddEditForm(props) {
                     placeholder='URL del curso'
                     value={courseData.link}
                     onChange={e => setCourseData({...courseData, link: e.target.value})}
-                    disabled = { course ? true : false}
                 />
             </Form.Item>
 
