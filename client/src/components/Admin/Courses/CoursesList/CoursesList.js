@@ -5,7 +5,7 @@ import DragSortableList from "react-drag-sortable";
 import Modal from "../../../Modal";
 import AddEditCourseForm from '../AddEditCourseForm';
 import { getAccessTokenApi } from "../../../../api/auth";
-import { getCoursesDataUdemyApi, deleteCourseApi } from "../../../../api/course";
+import { getCoursesDataUdemyApi, deleteCourseApi, updateCourseApi } from "../../../../api/course";
 
 import "./CoursesList.scss";
 
@@ -29,7 +29,13 @@ export default function CoursesList(props) {
   }, [courses]);
 
   const onSort = (sortedList, dropEvent) => {
-    console.log(sortedList);
+    const accessToken = getAccessTokenApi();
+
+    sortedList.forEach(item => {
+      const { _id } = item.content.props.course;
+      const order = item.rank;
+      updateCourseApi(accessToken, _id, { order } );
+    })
   };
 
  const addCourseModal = () => {
