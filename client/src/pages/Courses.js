@@ -35,11 +35,10 @@ export default function Courses() {
           <Spin
             tip="Cargando cursos"
             style={{ textAlign: "center", width: "100%", padding: "20px" }}
-          > </Spin>
+          />
         ) : (
           <CoursesList courses={courses} />
         )}
-        <CoursesList />
       </Col>
       <Col md={4} />
     </Row>
