@@ -5,5 +5,6 @@ const middleware_auth = require('../middleware/autenticated');
 const api = express.Router();
 
 api.post('/add-post', [middleware_auth.ensureAuth], postController.addPost );
+api.get('/get-posts', postController.getPosts);
 
 module.exports = api;
