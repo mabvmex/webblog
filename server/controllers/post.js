@@ -69,7 +69,7 @@ function updatePosts(req, res) {
         message: "Error del servidor",
       });
     } else {
-      if (!position) {
+      if (!postUpdate) {
         res.status(404).send({
           code: 404,
           message: "No se ha encontrado el Post",
