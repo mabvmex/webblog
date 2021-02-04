@@ -1,4 +1,3 @@
-const post = require("../models/post");
 const Post = require("../models/post");
 
 function addPost(req, res) {
@@ -84,8 +83,34 @@ function updatePosts(req, res) {
   });
 }
 
+function deletePost(req, res) {
+  const id = req.params.id;
+
+  Post.findByIdAndRemove(id, (err, postDeleted) => {
+    if (err) {
+      res.status(500).send({
+        code: 500,
+        message: "Error del servidor",
+      });
+    } else {
+      if (!postDeleted) {
+        res.status(404).send({
+          code: 404,
+          message: "El post no ha sido encontrado",
+        });
+      } else {
+        res.status(200).send({
+          code: 200,
+          message: "El post ha sido eliminado correctamente",
+        });
+      }
+    }
+  });
+}
+
 module.exports = {
   addPost,
   getPosts,
   updatePosts,
+  deletePost,
 };
