@@ -8,32 +8,32 @@ import { getPostsApi } from "../../../api/post";
 
 function Blog(props) {
   const { location, history } = props;
-  const [posts, setPosts] = useState(null)
-  const [reloadPosts, setReloadPosts] = useState(false)
+  const [posts, setPosts] = useState(null);
+  const [reloadPosts, setReloadPosts] = useState(false);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalTitle, serModalTitle] = useState("");
   const [modalContent, setModalContent] = useState(null);
   const { page = 1 } = queryString.parse(location.search);
 
-console.log(posts);
+  console.log(posts);
 
   useEffect(() => {
-      getPostsApi(20, page)
-      .then(response => {
-          if(response?.code !==200) {
-              notification['warning']({
-                  message: response.message
-              });
-          } else {
-              setPosts(response.posts);
-          }
+    getPostsApi(20, page)
+      .then((response) => {
+        if (response?.code !== 200) {
+          notification["warning"]({
+            message: response.message,
+          });
+        } else {
+          setPosts(response.post);
+        }
       })
-      .catch(()=>{
-        notification['error']({
-            message: 'Error del servidor'
+      .catch(() => {
+        notification["error"]({
+          message: "Error del servidor",
         });
       });
-      setReloadPosts(false)
+    setReloadPosts(false);
   }, [page, reloadPosts]);
 
   return (
