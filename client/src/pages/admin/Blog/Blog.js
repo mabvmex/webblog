@@ -46,7 +46,7 @@ function Blog(props) {
         <Button type="primary" shape='round'>Nuevo post </Button>
       </div>
 
-      <PostList posts={posts} />
+      <PostList posts={posts} setReloadPosts={setReloadPosts} />
       <Pagination posts={posts} location={location} history={history} />
 
       <Modal

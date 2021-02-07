@@ -36,7 +36,7 @@ export default function ListUsers(props) {
 
     confirm({
       title: "Eliminado usuario",
-      icon: <QuestionCircleFilled> </QuestionCircleFilled>,
+      icon: <QuestionCircleFilled/>,
       content: `¿Estás seguro que quieres eliminar a ${user.email}?`,
       okText: "Eliminar",
       okType: "danger primary",

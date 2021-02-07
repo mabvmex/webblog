@@ -79,7 +79,7 @@ export default function MenuWebList(props) {
 
         confirm ({
             title: 'Eliminar menú!',
-            icon: <QuestionCircleFilled> </QuestionCircleFilled>,
+            icon: <QuestionCircleFilled/>,
             content: `¿Deseas eliminar el menú ${menu.title}?`,
             okText: 'Eliminar',
             okType: 'danger primary',

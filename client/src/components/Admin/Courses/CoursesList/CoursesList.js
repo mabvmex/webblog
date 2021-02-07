@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { List, Button, Modal as ModalAnt, notification } from "antd";
-import { EditFilled, DeleteFilled } from "@ant-design/icons";
+import { EditFilled, DeleteFilled, QuestionCircleFilled } from "@ant-design/icons";
 import DragSortableList from "react-drag-sortable";
 import Modal from "../../../Modal";
 import AddEditCourseForm from '../AddEditCourseForm';
@@ -66,6 +66,7 @@ export default function CoursesList(props) {
 
     confirm({
       title: "Eliminando curso",
+      icon: <QuestionCircleFilled/>,
       content: `¿Estás seguro de eliminar el curso ${course.idCourse}?`,
       okText: "Eliminar",
       cancelText: "Cancel",
