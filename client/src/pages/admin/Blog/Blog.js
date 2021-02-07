@@ -3,8 +3,9 @@ import { Button, notification } from "antd";
 import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import Modal from "../../../components/Modal";
-import "./Blog.scss";
 import { getPostsApi } from "../../../api/post";
+import PostList from "../../../components/Admin/Blog/PostList";
+import "./Blog.scss";
 
 function Blog(props) {
   const { location, history } = props;
@@ -14,8 +15,6 @@ function Blog(props) {
   const [modalTitle, serModalTitle] = useState("");
   const [modalContent, setModalContent] = useState(null);
   const { page = 1 } = queryString.parse(location.search);
-
-  console.log(posts);
 
   useEffect(() => {
     getPostsApi(20, page)
@@ -36,13 +35,17 @@ function Blog(props) {
     setReloadPosts(false);
   }, [page, reloadPosts]);
 
+  if (!posts) {
+    return null
+  }
+
   return (
     <div className="blog">
       <div className="blog__add-post">
         <Button type="primary">Nuevo post</Button>
       </div>
 
-      <h1>=== POSTS_LIST ===</h1>
+      <PostList posts={posts} />
       <h2> === Paginación ===</h2>
 
       <Modal

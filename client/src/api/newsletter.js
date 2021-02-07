@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { basePath, apiVersion } from './config';
 
 export function suscribeNewsletterApi(email) {

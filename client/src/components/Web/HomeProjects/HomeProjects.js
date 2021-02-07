@@ -7,7 +7,6 @@ import js6 from "../../../assets/img/jpeg/javascript-es6.jpg";
 import wordpress from "../../../assets/img/jpeg/wordpress.jpg";
 import prestashop from "../../../assets/img/jpeg/prestashop-1-7.jpg";
 import grid from "../../../assets/img/jpeg/css-grid.jpg";
-import { AppleOutlined } from "@ant-design/icons";
 import "./HomeProjects.scss";
 
 export default function HomeProjects() {
