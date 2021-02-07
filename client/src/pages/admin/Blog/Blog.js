@@ -5,6 +5,7 @@ import queryString from "query-string";
 import Modal from "../../../components/Modal";
 import { getPostsApi } from "../../../api/post";
 import PostList from "../../../components/Admin/Blog/PostList";
+import Pagination from '../../../components/Pagination';
 import "./Blog.scss";
 
 function Blog(props) {
@@ -17,7 +18,7 @@ function Blog(props) {
   const { page = 1 } = queryString.parse(location.search);
 
   useEffect(() => {
-    getPostsApi(20, page)
+    getPostsApi(10, page)
       .then((response) => {
         if (response?.code !== 200) {
           notification["warning"]({
@@ -42,11 +43,11 @@ function Blog(props) {
   return (
     <div className="blog">
       <div className="blog__add-post">
-        <Button type="primary">Nuevo post</Button>
+        <Button type="primary" shape='round'>Nuevo post </Button>
       </div>
 
       <PostList posts={posts} />
-      <h2> === Paginación ===</h2>
+      <Pagination posts={posts} location={location} history={history} />
 
       <Modal
         title={modalTitle}

@@ -9,7 +9,7 @@ const { confirm } = Modal;
 export default function PostList(props) {
   const { posts } = props;
 
-  console.log(posts);
+//   console.log(posts);
   return (
     <div className="post-list">
       <List
