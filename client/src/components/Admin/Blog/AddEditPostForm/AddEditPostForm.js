@@ -4,7 +4,8 @@ import { FontSizeOutlined, LinkOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { Editor } from "@tinymce/tinymce-react";
 import { getAccessTokenApi } from "../../../../api/auth";
-import { addPostApi } from "../../../../api/post";
+import { addPostApi, updatePostApi } from "../../../../api/post";
+
 import "./AddEditPostForm.scss";
 
 export default function AddEditPostForm(props) {
@@ -30,6 +31,7 @@ export default function AddEditPostForm(props) {
       if (!post) {
         addPost();
       } else {
+        updatePost();
         console.log("=== EDITANDO POST ===");
         console.log(postData);
       }
@@ -56,6 +58,25 @@ export default function AddEditPostForm(props) {
         });
       });
   };
+
+  const updatePost = () => {
+      const token = getAccessTokenApi();
+      updatePostApi(token, post._id, postData)
+      .then(response => {
+          const typeNotification = response.code === 200 ? 'success' : 'warning';
+          notification[typeNotification]({
+              message: response.message
+          });
+          setIsVisibleModal(false);
+          setReloadPosts(true);
+          setPostData({})
+      })
+      .catch(() => {
+          notification['error']({
+              message: 'Error del servidor'
+          });
+      });
+  }
 
   return (
     <div className="add-edit-post-form">
