@@ -5,7 +5,8 @@ import queryString from "query-string";
 import Modal from "../../../components/Modal";
 import { getPostsApi } from "../../../api/post";
 import PostList from "../../../components/Admin/Blog/PostList";
-import Pagination from '../../../components/Pagination';
+import Pagination from "../../../components/Pagination";
+import AddEditPostForm from "../../../components/Admin/Blog/AddEditPostForm";
 import "./Blog.scss";
 
 function Blog(props) {
@@ -13,7 +14,7 @@ function Blog(props) {
   const [posts, setPosts] = useState(null);
   const [reloadPosts, setReloadPosts] = useState(false);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-  const [modalTitle, serModalTitle] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState(null);
   const { page = 1 } = queryString.parse(location.search);
 
@@ -36,14 +37,28 @@ function Blog(props) {
     setReloadPosts(false);
   }, [page, reloadPosts]);
 
+  const addPost = () => {
+    setIsVisibleModal(true);
+    setModalTitle("Nuevo post");
+    setModalContent(
+      <AddEditPostForm
+        setIsVisibleModal={setIsVisibleModal}
+        setReloadPosts={setReloadPosts}
+        post={null}
+      />
+    );
+  };
+
   if (!posts) {
-    return null
+    return null;
   }
 
   return (
     <div className="blog">
       <div className="blog__add-post">
-        <Button type="primary" shape='round'>Nuevo post </Button>
+        <Button type="primary" shape="round" onClick={addPost}>
+          Nuevo post
+        </Button>
       </div>
 
       <PostList posts={posts} setReloadPosts={setReloadPosts} />
@@ -54,7 +69,9 @@ function Blog(props) {
         isVisible={isVisibleModal}
         setIsVisible={setIsVisibleModal}
         width="75%"
-      />
+      >
+        {modalContent}
+      </Modal>
     </div>
   );
 }
