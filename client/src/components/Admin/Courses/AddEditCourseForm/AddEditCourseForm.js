@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, notification } from 'antd';
-import { KeyOutlined, GiftFilled, DollarCircleFilled, GlobalOutlined } from '@ant-design/icons';
+import { KeyOutlined, GiftFilled, DollarCircleFilled, LinkOutlined } from '@ant-design/icons';
 import { getAccessTokenApi } from '../../../../api/auth';
 import { addCourseApi, updateCourseApi } from '../../../../api/course';
 
@@ -93,7 +93,7 @@ function AddEditForm(props) {
 
             <Form.Item>
                 <Input
-                    prefix={<GlobalOutlined />}
+                    prefix={<LinkOutlined />}
                     placeholder='URL del curso'
                     value={courseData.link}
                     onChange={e => setCourseData({...courseData, link: e.target.value})}
