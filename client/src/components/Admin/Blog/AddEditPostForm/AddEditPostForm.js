@@ -118,7 +118,7 @@ function AddEditForm(props) {
       </Row>
 
       <Editor
-        value={postData.description ? postData.description : ""}
+        value={postData.description ? postData.description : " "}
         init={{
           height: 400,
           menubar: true,
