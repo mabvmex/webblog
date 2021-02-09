@@ -40,7 +40,10 @@ export default function PostsListWeb(props) {
   return (
     <div className="posts-list-web">
       <h1> === BLOG === </h1>
-      <List dataSource={posts.docs} renderItem={(post) => <Post post={post} />} />
+      <List
+        dataSource={posts.docs}
+        renderItem={(post) => <Post post={post} />}
+      />
       <Pagination posts={posts} location={location} history={history} />
     </div>
   );
@@ -56,12 +59,12 @@ function Post(props) {
       <div className="post__date">
         <span> {day} </span>
         <span> {month} </span>
-      
-      
+      </div>
+
       <Link to={`blog/${post.url}`}>
-        <List.Item.Meta title={post.title} />
+        {/* {post.title} */}
+        <List.Item.Meta title={post.title}  />
       </Link>
-    </div>
     </List.Item>
   );
 }
