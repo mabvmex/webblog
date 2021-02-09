@@ -1,14 +1,21 @@
-import React from 'react';
-import { Row, Col } from 'antd';
-import { useParams } from 'react-router-dom';
+import React from "react";
+import { Row, Col } from "antd";
+import { useParams } from "react-router-dom";
+import PostsListWeb from "../components/Web/Blog/PostsListWeb";
 
 export default function Blog(props) {
-    const { url } = useParams();
-    
+  const { location, history } = props;
+  const { url } = useParams();
 
-    return (
-        <div>
-            {url ? <h1 >=== DENTRO DEL POST === </h1> : <h1 >=== LISTA DE POSTS === </h1>}
-        </div>
-    )
+  return (
+    <Row>
+      <Col md={4} />
+
+      <Col md={16}>
+        {url ? ( "PostInfo" ) : ( <PostsListWeb location={location} history={history} /> )}
+      </Col>
+      
+      <Col md={4} />
+    </Row>
+  );
 }
