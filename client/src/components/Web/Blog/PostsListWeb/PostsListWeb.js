@@ -5,6 +5,7 @@ import moment from "moment";
 import queryString from "query-string";
 import Pagination from "../../../Pagination";
 import { getPostsApi } from "../../../../api/post";
+import { Helmet } from 'react-helmet';
 import "moment/locale/es";
 import "./PostsListWeb.scss";
 
@@ -38,6 +39,12 @@ export default function PostsListWeb(props) {
   }
 
   return (
+    <>
+    <Helmet>
+      <title>
+        Blog | Internet y tecnología
+      </title>
+    </Helmet>
     <div className="posts-list-web">
       <h1> === BLOG === </h1>
       <List
@@ -46,6 +53,7 @@ export default function PostsListWeb(props) {
       />
       <Pagination posts={posts} location={location} history={history} />
     </div>
+    </>
   );
 }
 

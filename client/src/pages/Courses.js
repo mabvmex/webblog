@@ -3,6 +3,7 @@ import { Row, Col, Spin, notification } from "antd";
 import { getCoursesApi } from "../api/course";
 import PresentationCourses from "../components/Web/Courses/PresentationCourses";
 import CoursesList from "../components/Web/Courses/CoursesList";
+import { Helmet } from 'react-helmet';
 
 export default function Courses() {
   const [courses, setCourses] = useState(null);
@@ -26,6 +27,13 @@ export default function Courses() {
   }, []);
 
   return (
+
+    <>
+    <Helmet>
+      <title> Cursos | Desarrollo Web y Mobil </title>
+      <meta name='description' content='Cursos | Web de Tecnología e Internet' data-react-helmet='true' /> 
+    </Helmet>
+
     <Row>
       <Col md={4} />
       <Col md={16}>
@@ -42,5 +50,6 @@ export default function Courses() {
       </Col>
       <Col md={4} />
     </Row>
+    </>
   );
 }
