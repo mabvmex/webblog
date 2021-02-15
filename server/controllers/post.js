@@ -12,8 +12,8 @@ function addPost(req, res) {
       });
     } else {
       if (!postStored) {
-        res.status(400).send({
-          code: 400,
+        res.status(404).send({
+          code: 404,
           message: "No se ha creado el post",
         });
       } else {

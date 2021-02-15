@@ -6,7 +6,8 @@ const { API_VERSION, IP_SERVER, PORT_DB } = require("./config");
 // mongoose.set("useFindAndModify", false); // Cuando hay error en consola.
 
 mongoose.connect(
-  `mongodb://${IP_SERVER}:${PORT_DB}/mabvmexBlog`,
+  // `mongodb://${IP_SERVER}:${PORT_DB}/mabvmexBlog`,
+  `mongodb+srv://mabvmex-blog:mabvbam2$-webblog@webblogpersonal.kpeze.mongodb.net/<dbname>?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true, useUnifiedTopology: true
   },
